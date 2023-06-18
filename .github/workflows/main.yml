@@ -2,8 +2,8 @@ name: Node.js CI/CD
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
   build:
