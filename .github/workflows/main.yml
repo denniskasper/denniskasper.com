@@ -50,6 +50,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           rm: true
-          source: ./dist
+          source: 'index.html'
           target: /var/www/denniskasper.com/html
           debug: true
