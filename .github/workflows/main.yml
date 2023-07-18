@@ -43,7 +43,12 @@ jobs:
       - name: Build production bundle
         run: pnpm build
 
-      # - name: Copy files
-      #   run: |
-      #     rm -r /var/www/denniskasper.com/html/*
-      #     cp -a ./dist/* /var/www/denniskasper.com/html/
+      - name: Copy files via ssh
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          rm: true
+          source: ./dist/*
+          target: /var/www/denniskasper.com/html/
