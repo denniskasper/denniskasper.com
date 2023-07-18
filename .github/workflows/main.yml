@@ -50,5 +50,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           rm: true
-          source: ./dist/*
-          target: /var/www/denniskasper.com/html/
+          source: ./dist
+          target: /var/www/denniskasper.com/html
