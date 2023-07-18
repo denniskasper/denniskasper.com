@@ -52,3 +52,4 @@ jobs:
           rm: true
           source: ./dist
           target: /var/www/denniskasper.com/html
+          debug: true
