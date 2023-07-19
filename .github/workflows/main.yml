@@ -43,13 +43,16 @@ jobs:
       - name: Build production bundle
         run: pnpm build
 
-      - name: Copy files via ssh
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          rm: true
-          source: 'index.html'
-          target: /var/www/denniskasper.com/html
-          debug: true
+      - name: Archive dist folder
+        run: tar -czf dist.tar.gz
+
+      # - name: Copy files via ssh
+      #   uses: appleboy/scp-action@v0.1.4
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     password: ${{ secrets.PASSWORD }}
+      #     rm: true
+      #     source: 'index.html'
+      #     target: /var/www/denniskasper.com/html
+      #     debug: true
