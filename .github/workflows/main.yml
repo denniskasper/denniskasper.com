@@ -44,7 +44,9 @@ jobs:
         run: pnpm build
 
       - name: Archive dist folder
-        run: tar -czf dist.tar.gz ./dist
+        run: |
+          tar -czf dist.tar.gz ./dist
+          ls -la
 
       - name: Copy files via ssh
         uses: appleboy/scp-action@v0.1.4
@@ -53,5 +55,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           rm: true
-          source: 'dist.tar.gz'
+          source: dist.tar.gz
           target: /var/www/denniskasper.com/html
+          debug: true
