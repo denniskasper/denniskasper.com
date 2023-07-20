@@ -55,12 +55,12 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
-          rm: true
           source: dist.tar.gz
           target: /var/www/denniskasper.com/html
+          rm: true
           debug: true
 
-      - name: unzip archive and copy files
+      - name: extract archive and copy files
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.HOST }}
@@ -69,5 +69,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             tar -zxvf /var/www/denniskasper.com/html/dist.tar.gz
-            mv /var/www/denniskasper.com/html/dist/* var/www/denniskasper.com/html
-            rm -rf /var/www/denniskasper.com/html/dist.tar.gz /var/www/denniskasper.com/html/dist
+            # mv /var/www/denniskasper.com/html/dist/* var/www/denniskasper.com/html
+            # rm -rf /var/www/denniskasper.com/html/dist.tar.gz /var/www/denniskasper.com/html/dist
