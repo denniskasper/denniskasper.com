@@ -44,9 +44,7 @@ jobs:
         run: pnpm build
 
       - name: Archive dist folder
-        run: |
-          tar -czf dist.tar.gz ./dist
-          ls -la
+        run: tar -czf dist.tar.gz ./dist
 
       - name: Copy files via ssh
         uses: appleboy/scp-action@v0.1.4
@@ -58,9 +56,8 @@ jobs:
           source: dist.tar.gz
           target: /var/www/denniskasper.com/html
           rm: true
-          debug: true
 
-      - name: extract archive and copy files
+      - name: Extract archive and copy files
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.HOST }}
@@ -68,6 +65,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            tar -zxvf /var/www/denniskasper.com/html/dist.tar.gz
-            # mv /var/www/denniskasper.com/html/dist/* var/www/denniskasper.com/html
-            # rm -rf /var/www/denniskasper.com/html/dist.tar.gz /var/www/denniskasper.com/html/dist
+            tar -zxvf /var/www/denniskasper.com/html/dist.tar.gz -C /var/www/denniskasper.com/html
+            mv /var/www/denniskasper.com/html/dist/* /var/www/denniskasper.com/html
+            rm -rf /var/www/denniskasper.com/html/dist.tar.gz /var/www/denniskasper.com/html/dist
