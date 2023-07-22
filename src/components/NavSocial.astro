@@ -1,0 +1,11 @@
+---
+const { icon, link, css } = Astro.props
+---
+
+<a href={link} target="_blank">
+  <img
+    src={`/icons/${icon}.svg`}
+    alt={icon}
+    class=`h-6 w-6 cursor-pointer rounded ${css}`
+  />
+</a>
