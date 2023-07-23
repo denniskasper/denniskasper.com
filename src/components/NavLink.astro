@@ -1,7 +1,7 @@
 ---
 const { title, url } = Astro.props
 // https://docs.astro.build/en/reference/configuration-reference/#buildformat
-const pathname = new URL(Astro.url).pathname.split('.')[0]
+const pathname = new URL(Astro.url).pathname
 ---
 
 <a class="relative group" href={url}>
