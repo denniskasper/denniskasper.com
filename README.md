@@ -6,16 +6,31 @@ My personal homepage.
 
 ## getting started
 
+**Requirements:** Docker, Docker Compose, Node.js
+
 Local development
 
 ```console
-COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose -f docker-compose.yaml up --build
+pnpm install
+pnpm dev
 ```
 
-Building the image
+or using docker compose
 
 ```console
-DOCKER_BUILDKIT=1 docker build --target runtime -t denniskasperdotcom .
+make up
+```
+
+Building the production image
+
+```console
+make build-prod
+```
+
+Remove everything
+
+```console
+make destroy
 ```
 
 ## stack

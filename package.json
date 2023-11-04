@@ -1,7 +1,8 @@
 {
   "name": "denniskasper.com",
-  "type": "module",
   "version": "0.0.1",
+  "private": "true",
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "dev-compose": "astro dev --host",
@@ -11,8 +12,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/tailwind": "^5.0.0",
-    "astro": "^3.0.3",
-    "tailwindcss": "^3.3.3"
+    "@astrojs/tailwind": "^5.0.2",
+    "astro": "^3.4.3",
+    "tailwindcss": "^3.3.5"
   }
 }

@@ -5,6 +5,7 @@ services:
     build:
       context: ./
       target: dev
+    container_name: web
     volumes:
       - .:/app
       - /app/node_modules
