@@ -4,15 +4,17 @@ const { title, url } = Astro.props
 const pathname = new URL(Astro.url).pathname
 ---
 
-<a class="relative group" href={url}>
+<a
+  class="relative group"
+  href={url}
+>
   {title}
   <span
     class:list={[
       'inline-block h-[1px] bg-dark dark:bg-light absolute left-0 bottom-0',
       { 'w-full': pathname === url },
       {
-        'w-0 group-hover:w-full transition-[width] ease duration-300':
-          pathname !== url,
+        'w-0 group-hover:w-full transition-[width] ease duration-300': pathname !== url,
       },
     ]}
   >
