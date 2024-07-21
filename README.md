@@ -18,7 +18,7 @@ pnpm dev
 or using docker compose
 
 ```console
-make up
+make watch
 ```
 
 Building the production image

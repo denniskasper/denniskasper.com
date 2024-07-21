@@ -1,11 +1,11 @@
 {
   "name": "denniskasper.com",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": "true",
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "dev-compose": "astro dev --host",
+    "dev-watch": "astro dev --host",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
