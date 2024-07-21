@@ -1,0 +1,46 @@
+.markdown-content {
+  /* max-width: 800px; */
+  /* margin: 0 auto; */
+  /* padding: 20px; */
+  /* line-height: 1.6; */
+}
+
+/* .markdown-content h1,
+.markdown-content h2,
+.markdown-content h3 {
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0.5em;
+  margin-bottom: 0.5em;
+} */
+
+.markdown-content h1 {
+  font-size: 2em;
+  margin-top: 0;
+}
+
+.markdown-content h2 {
+  font-size: 1.5em;
+  margin-top: 1em;
+}
+
+.markdown-content h3 {
+  font-size: 1.2em;
+  margin-top: 0.5em;
+}
+
+.markdown-content p {
+  margin-bottom: 1em;
+}
+
+.markdown-content code {
+  background: #f4f4f4;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.markdown-content blockquote {
+  border-left: 4px solid #ddd;
+  padding-left: 16px;
+  margin: 0;
+  color: #666;
+}
