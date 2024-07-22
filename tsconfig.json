@@ -2,7 +2,6 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     // https://www.totaltypescript.com/tsconfig-cheat-sheet
-
     /* Base Options: */
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -11,12 +10,24 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "moduleDetection": "force",
-
     /* Strictness */
     "strict": true,
     "noUncheckedIndexedAccess": true,
-
     /* If your code runs in the DOM: */
-    "lib": ["es2022", "dom", "dom.iterable"]
+    "lib": [
+      "es2022",
+      "dom",
+      "dom.iterable"
+    ],
+    /* use import aliases */
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@layouts/*": [
+        "src/layouts/*"
+      ]
+    }
   }
 }
