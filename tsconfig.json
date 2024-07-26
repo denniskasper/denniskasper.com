@@ -12,6 +12,7 @@
     "moduleDetection": "force",
     /* Strictness */
     "strict": true,
+    "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
     /* If your code runs in the DOM: */
     "lib": [
