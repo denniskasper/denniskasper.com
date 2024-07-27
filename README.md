@@ -1,6 +1,6 @@
 # denniskasper.com
 
-![CI/CD](https://github.com/DennisKasper/denniskasper.com/actions/workflows/main.yml/badge.svg)
+[![CI/CD](https://github.com/DennisKasper/denniskasper.com/actions/workflows/build-deploy.yaml/badge.svg)](https://github.com/DennisKasper/denniskasper.com/actions/workflows/build-deploy.yaml)
 
 My personal homepage.
 
