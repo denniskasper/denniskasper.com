@@ -35,11 +35,11 @@ jobs:
         run: tar -czf dist.tar.gz ./dist
 
       - name: Copy files via ssh
-        uses: appleboy/scp-action@v0.1.4
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.KEY }}
           source: dist.tar.gz
           target: /var/www/denniskasper.com/html
           rm: true
@@ -50,11 +50,11 @@ jobs:
 
     steps:
       - name: Extract archive and move & delete files
-        uses: appleboy/ssh-action@v0.1.10
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
+          key: ${{ secrets.KEY }}
           script: |
             tar -zxvf /var/www/denniskasper.com/html/dist.tar.gz -C /var/www/denniskasper.com/html
             mv /var/www/denniskasper.com/html/dist/* /var/www/denniskasper.com/html
