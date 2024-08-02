@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test:e2e": "playwright test"
+    "pw:test": "playwright test",
+    "pw:ui": "pnpm exec playwright test --ui"
   },
   "dependencies": {
     "@astrojs/tailwind": "^5.1.0",
