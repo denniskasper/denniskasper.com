@@ -20,7 +20,7 @@ su - $new_user
 sudo mkdir -p /home/$new_user/.ssh
 
 # Hint: To retrieve the SSH public key from your local machine, run:
-# cat .ssh/id_ed25519.pub
+# cat ~/.ssh/id_ed25519.pub
 # Copy the output of this command and paste it when prompted below.
 read -p "Enter the public SSH key for the new user: " ssh_key
 
