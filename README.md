@@ -33,6 +33,20 @@ Remove everything
 make destroy
 ```
 
+## running tests
+
+Ensure Playwright browsers are installed
+
+```console
+pnpm exec playwright install
+```
+
+Run tests locally
+
+```console
+pnpm pw:test
+```
+
 ## stack
 
 [astro](https://astro.build/)  
