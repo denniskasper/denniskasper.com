@@ -1,3 +1,7 @@
+html {
+  overflow-y: scroll;
+}
+
 .markdown-content h1 {
   font-size: 2em;
   margin-top: 0;
