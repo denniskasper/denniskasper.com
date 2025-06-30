@@ -41,9 +41,10 @@ Ensure Playwright browsers are installed
 pnpm exec playwright install
 ```
 
-Run tests locally
+Build the project and run tests
 
 ```console
+pnpm build
 pnpm pw:test
 ```
 
