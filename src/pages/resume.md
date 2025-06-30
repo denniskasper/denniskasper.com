@@ -23,7 +23,17 @@ author: 'Dennis Kasper'
 
 ---
 
-## 🧑‍💼 Work Experience
+## 🧑‍💼 About Me
+
+<div class="about-me-section">
+
+Software Engineer with a strong focus on web technologies and a solid foundation in computational mechanics. Extensive experience in full stack development, cloud computing, and DevOps, coupled with a strong background in structural, thermal, and fluid mechanics. Passionate about leveraging modern frameworks and tools to build innovative web applications and solutions, while applying engineering principles to optimize performance and drive technological advancements.
+
+</div>
+
+## 💻 Work Experience
+
+<div class="expertise-section">
 
 ### Full Stack Web Developer/DevOps Engineer — FEV EVA GmbH
 
@@ -44,6 +54,10 @@ _Jan. 2021 – Present_ — Hybrid, Munich
   Understanding of data modeling and normalization.
   Familiarity with database migration tools and ORM like Drizzle.
 
+</div>
+
+<div class="expertise-section">
+
 ### CFD/FEM Simulation Engineer — FEV EVA GmbH
 
 _Nov. 2016 – Dec. 2020 · 4 Years 2 Months_ — On-site, Munich
@@ -57,14 +71,18 @@ _Nov. 2016 – Dec. 2020 · 4 Years 2 Months_ — On-site, Munich
   Utilized the `python-can` library to implement CAN Bus communication protocols with Raspberry Pi and PiCan FD, enabling data acquisition, specifically for reading out the error memory from high-voltage storage.  
   Implemented a user interface (UI) with React to communicate with the Raspberry Pi, providing an intuitive and user-friendly interaction experience.
 
+</div>
+
+<div class="expertise-section">
+
 ### Research Assistant — ILEK, University of Stuttgart
 
 _Oct. 2011 – Sept. 2013 · 2 Years_
 
+</div>
+
 - Conducted research in lightweight construction.
 - Contributed to projects on simulation and model reduction.
-
----
 
 ## 🎓 Education
 
@@ -79,8 +97,6 @@ _Oct. 2011 – Sept. 2013 · 2 Years_
 - _2009 – 2011_  
   _Thesis: Fluid Flow Simulations in Paint Drying Ovens (P+Z Engineering GmbH)_
 
----
-
 ## 🛠 Skills
 
 - Languages: Python, JavaScript, TypeScript, SQL, MATLAB, VBA
@@ -90,21 +106,15 @@ _Oct. 2011 – Sept. 2013 · 2 Years_
 - Simulation: FEM, CFD, ANSYS, OpenFOAM
 - Embedded Systems & IoT: Raspberry Pi, CAN-Bus
 
----
-
 ## 📜 Certifications
 
 - Deep Learning Specialization — Coursera, July 2020
 - TensorFlow in Practice — Coursera, June 2020
 
----
-
 ## 🏆 Awards
 
 - BDB-Buchpreis — For outstanding academic achievements, 2011
   _(Bund Deutscher Baumeister Architekten und Ingenieure BW e.V.)_
-
----
 
 ## 🌐 Languages
 

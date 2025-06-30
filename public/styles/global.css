@@ -25,3 +25,19 @@ html {
 .markdown-content ol {
   padding-left: 25px;
 }
+
+.expertise-section {
+  margin-top: 15px;
+}
+
+.expertise-section > ul > li {
+  margin-bottom: 1.5em;
+}
+
+.expertise-section > ul > li:last-child {
+  margin-bottom: 0;
+}
+
+.about-me-section {
+  margin-top: 15px;
+}
