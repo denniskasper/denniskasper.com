@@ -30,7 +30,7 @@ const year = new Date().getFullYear()
     />
   </head>
   <body class="font-mono bg-light dark:bg-dark text-dark dark:text-light">
-    <main class="md:container md:mx-auto w-full min-h-screen px-4 relative">
+    <main class="md:container md:mx-auto w-full min-h-screen px-4 pb-48 relative">
       <header class="flex items-center justify-between py-8">
         <nav class="flex items-center justify-center gap-x-8 text-xl">
           <NavLink
@@ -85,72 +85,71 @@ const year = new Date().getFullYear()
       </div>
     </main>
   </body>
-</html>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const localStorageAccept = 'denniskasper.com-storageAccepted'
+      const localStorageTheme = 'denniskasper.com-theme'
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const localStorageAccept = 'denniskasper.com-storageAccepted'
-    const localStorageTheme = 'denniskasper.com-theme'
+      const iconSunSource = '/icons/sun.svg'
 
-    const iconSunSource = '/icons/sun.svg'
+      let currentTheme = 'light'
 
-    let currentTheme = 'light'
-
-    const banner = document.querySelector('[data-banner]') as HTMLDialogElement
-    const acceptButton = document.querySelector('[data-acceptButton]') as HTMLButtonElement
-    const declineButton = document.querySelector('[data-declineButton]') as HTMLButtonElement
-    const icon = document.querySelector('[data-icon]') as HTMLImageElement
-
-    const storageAccepted = localStorage.getItem(localStorageAccept)
-
-    if (storageAccepted === null) {
-      banner.style.display = 'block'
-    }
-
-    if (storageAccepted === 'false') {
-      banner.style.display = 'none'
-    }
-
-    acceptButton.addEventListener('click', () => {
-      localStorage.setItem(localStorageAccept, 'true')
-      banner.style.display = 'none'
-
-      localStorage.setItem(localStorageTheme, currentTheme)
-    })
-
-    declineButton.addEventListener('click', () => {
-      banner.style.display = 'none'
-      localStorage.setItem(localStorageAccept, 'false')
-    })
-
-    const locaStorageTheme = localStorage.getItem(localStorageTheme)
-
-    if (locaStorageTheme === 'dark') {
-      document.documentElement.classList.add('dark')
-      icon.src = iconSunSource
-      currentTheme = 'dark'
-    }
-
-    icon?.addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark')
+      const banner = document.querySelector('[data-banner]') as HTMLDialogElement
+      const acceptButton = document.querySelector('[data-acceptButton]') as HTMLButtonElement
+      const declineButton = document.querySelector('[data-declineButton]') as HTMLButtonElement
+      const icon = document.querySelector('[data-icon]') as HTMLImageElement
 
       const storageAccepted = localStorage.getItem(localStorageAccept)
 
-      if (document.documentElement.classList.contains('dark')) {
+      if (storageAccepted === null) {
+        banner.style.display = 'block'
+      }
+
+      if (storageAccepted === 'false') {
+        banner.style.display = 'none'
+      }
+
+      acceptButton.addEventListener('click', () => {
+        localStorage.setItem(localStorageAccept, 'true')
+        banner.style.display = 'none'
+
+        localStorage.setItem(localStorageTheme, currentTheme)
+      })
+
+      declineButton.addEventListener('click', () => {
+        banner.style.display = 'none'
+        localStorage.setItem(localStorageAccept, 'false')
+      })
+
+      const locaStorageTheme = localStorage.getItem(localStorageTheme)
+
+      if (locaStorageTheme === 'dark') {
+        document.documentElement.classList.add('dark')
         icon.src = iconSunSource
         currentTheme = 'dark'
-
-        if (storageAccepted === 'true') {
-          localStorage.setItem(localStorageTheme, 'dark')
-        }
-      } else {
-        icon.src = '/icons/moon.svg'
-        currentTheme = 'light'
-
-        if (storageAccepted === 'true') {
-          localStorage.setItem(localStorageTheme, 'light')
-        }
       }
+
+      icon?.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark')
+
+        const storageAccepted = localStorage.getItem(localStorageAccept)
+
+        if (document.documentElement.classList.contains('dark')) {
+          icon.src = iconSunSource
+          currentTheme = 'dark'
+
+          if (storageAccepted === 'true') {
+            localStorage.setItem(localStorageTheme, 'dark')
+          }
+        } else {
+          icon.src = '/icons/moon.svg'
+          currentTheme = 'light'
+
+          if (storageAccepted === 'true') {
+            localStorage.setItem(localStorageTheme, 'light')
+          }
+        }
+      })
     })
-  })
-</script>
+  </script>
+</html>
