@@ -9,6 +9,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "preview-host": "astro preview --host",
     "astro": "astro",
     "pw:test": "playwright test",
     "pw:ui": "pnpm exec playwright test --ui"
