@@ -1,5 +1,6 @@
 services:
   web:
+    image: denniskasper.com
     build:
       context: ./
       target: dev
