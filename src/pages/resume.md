@@ -1,5 +1,5 @@
 ---
-title: 'My Resume'
+title: 'resume | Dennis Kasper'
 layout: '../layouts/layout.astro'
 author: 'Dennis Kasper'
 ---
