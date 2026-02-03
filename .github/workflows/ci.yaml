@@ -14,5 +14,8 @@ jobs:
       - name: Install dependencies
         uses: ./.github/actions/setup
 
+      - name: Fetch resume
+        run: pnpm fetch-resume
+
       - name: Build production bundle
         run: pnpm build
