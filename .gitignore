@@ -1,6 +1,10 @@
 # build output
 dist/
 
+# generated resume (fetched from https://github.com/denniskasper/resume)
+src/pages/resume.md
+public/resume.pdf
+
 # generated types
 .astro/
 
