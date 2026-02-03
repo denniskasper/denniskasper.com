@@ -23,15 +23,11 @@ layout: '../layouts/layout.astro'
 author: 'Dennis Kasper'
 ---`
 
-const DOWNLOAD_BUTTON = `
-<div class="mt-4 mb-6">
-  <a href="/resume.pdf" download="dennis-kasper-resume.pdf">
+const DOWNLOAD_BUTTON = `<a href="/resume.pdf" download="dennis-kasper-resume.pdf">
     <button class="bg-blue-600 bg-opacity-40 text-white px-3 py-1.5 rounded-md hover:bg-opacity-70 transition text-sm font-normal">
-      Download Resume (PDF)
+      Download Resume
     </button>
-  </a>
-</div>
-`
+  </a>`
 
 async function fetchMarkdown(): Promise<void> {
   console.log(`Fetching markdown from ${RESUME_MD_URL}...`)
@@ -46,13 +42,14 @@ async function fetchMarkdown(): Promise<void> {
   // Remove the profile photo img tag (not needed for web version)
   markdown = markdown.replace(/<img[^>]*profile-photo[^>]*>\n*/i, '')
 
-  // Find the position after the contact links line to insert the download button
-  const contactLineRegex = /(\[Email\].*\[LinkedIn\].*\[GitHub\].*\[denniskasper\.com\].*)\n/
-  const match = markdown.match(contactLineRegex)
-
-  if (match) {
-    markdown = markdown.replace(contactLineRegex, `$1\n${DOWNLOAD_BUTTON}\n`)
-  }
+  // Replace h1 name with flex container including download button
+  markdown = markdown.replace(
+    /^# (.+)$/m,
+    `<div class="flex justify-between items-center mb-2">
+  <h1 class="text-3xl font-bold m-0">$1</h1>
+  ${DOWNLOAD_BUTTON}
+</div>`
+  )
 
   // Wrap everything in markdown-content div for styling
   const content = `${FRONTMATTER}
