@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
   <style>
-    .bg { fill: #1f2937; }
-    .letters { fill: #f9fafb; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight: 800; font-size: 14px; letter-spacing: -1px; }
+    .bg { fill: #111110; }
+    .letters { fill: #c8a45e; font-family: Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 13px; letter-spacing: -0.5px; }
     @media (prefers-color-scheme: dark) {
-      .bg { fill: #f9fafb; }
-      .letters { fill: #1f2937; }
+      .bg { fill: #c8a45e; }
+      .letters { fill: #111110; }
     }
   </style>
-  <rect x="2" y="2" width="28" height="28" rx="8" class="bg"/>
+  <rect x="2" y="2" width="28" height="28" rx="6" class="bg"/>
   <text x="16" y="17" text-anchor="middle" dominant-baseline="central" class="letters">DK</text>
 </svg>

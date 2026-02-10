@@ -2,22 +2,28 @@
 const { title, url } = Astro.props
 // https://docs.astro.build/en/reference/configuration-reference/#buildformat
 const pathname = new URL(Astro.url).pathname
+const isActive = pathname === url
 ---
 
 <a
-  class="relative group"
+  class="relative group font-body text-sm font-medium tracking-wide uppercase"
   href={url}
 >
-  {title}
+  <span class:list={[
+    'transition-colors duration-300',
+    { 'text-dark dark:text-light': isActive },
+    { 'text-muted-light dark:text-muted-dark group-hover:text-dark dark:group-hover:text-light': !isActive },
+  ]}>
+    {title}
+  </span>
   <span
     class:list={[
-      'inline-block h-[1px] bg-dark dark:bg-light absolute left-0 bottom-0',
-      { 'w-full': pathname === url },
+      'block h-[1.5px] bg-accent absolute left-0 -bottom-1 rounded-full',
+      { 'w-full': isActive },
       {
-        'w-0 group-hover:w-full transition-[width] ease duration-300': pathname !== url,
+        'w-0 group-hover:w-full transition-[width] ease-out duration-400': !isActive,
       },
     ]}
   >
-    {' '}
   </span>
 </a>

@@ -32,3 +32,7 @@ pnpm-debug.log*
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# claude code
+.agents/
+.claude/

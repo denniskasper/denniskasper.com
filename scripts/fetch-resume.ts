@@ -24,8 +24,11 @@ author: 'Dennis Kasper'
 ---`
 
 const DOWNLOAD_BUTTON = `<a href="/resume.pdf" download="dennis-kasper-resume.pdf">
-    <button class="bg-blue-600 bg-opacity-40 text-white px-3 py-1.5 rounded-md hover:bg-opacity-70 transition text-sm font-normal">
-      Download Resume
+    <button class="group flex items-center gap-2 bg-accent/15 text-accent-muted dark:text-accent-light border border-accent/20 px-4 py-2 rounded-lg hover:bg-accent/25 hover:border-accent/40 transition-all duration-300 text-sm font-medium cursor-pointer">
+      <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      Download
     </button>
   </a>`
 
@@ -46,7 +49,7 @@ async function fetchMarkdown(): Promise<void> {
   markdown = markdown.replace(
     /^# (.+)$/m,
     `<div class="flex justify-between items-center mb-2">
-  <h1 class="text-3xl font-bold m-0">$1</h1>
+  <h1 class="text-3xl font-bold m-0 font-display">$1</h1>
   ${DOWNLOAD_BUTTON}
 </div>`
   )

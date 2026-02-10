@@ -30,65 +30,101 @@ const year = new Date().getFullYear()
     />
     <title>{pageTitle}</title>
     <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
       rel="stylesheet"
       href="/styles/global.css"
     />
   </head>
-  <body class="bg-light dark:bg-dark text-dark dark:text-light text-base leading-relaxed">
-    <main class="md:container md:mx-auto w-full min-h-screen px-4 pb-48 relative">
-      <header class="flex items-center justify-between py-8">
-        <nav class="flex items-center justify-center gap-x-8 text-xl">
-          <NavLink
-            title="home"
-            url="/"
-          />
-          <NavLink
-            title="resume"
-            url="/resume/"
-          />
-        </nav>
-        <nav class="flex items-center justify-center gap-x-4">
-          <NavSocial
-            icon="github"
-            link="https://github.com/denniskasper"
-            css="dark:bg-white"
-          />
-          <NavSocial
-            icon="linkedin"
-            link="https://www.linkedin.com/in/dennis-kasper-995b2112b"
-            css="dark:bg-white"
-          />
-          <img
-            data-icon
-            src="/icons/moon.svg"
-            alt="sun/moon"
-            class="h-6 w-6 cursor-pointer ml-2"
-          />
-        </nav>
-      </header>
-      <slot />
-      <footer class="mt-20">&copy; {year} Dennis Kasper</footer>
+  <body class="bg-light dark:bg-dark text-dark dark:text-light font-body text-base leading-relaxed antialiased">
+    <div class="min-h-screen flex flex-col">
+      <main class="w-full max-w-3xl mx-auto px-6 md:px-8 flex-1">
+        <header class="flex items-center justify-between pt-10 pb-16 md:pt-14 md:pb-20 animate-fade-in">
+          <nav class="flex items-center gap-x-8">
+            <NavLink
+              title="home"
+              url="/"
+            />
+            <NavLink
+              title="resume"
+              url="/resume/"
+            />
+          </nav>
+          <nav class="flex items-center gap-x-3">
+            <NavSocial
+              icon="github"
+              link="https://github.com/denniskasper"
+            />
+            <NavSocial
+              icon="linkedin"
+              link="https://www.linkedin.com/in/dennis-kasper-995b2112b"
+            />
+            <button
+              data-icon-btn
+              class="ml-3 p-1.5 rounded-full hover:bg-dark/5 dark:hover:bg-light/5 transition-colors duration-300 cursor-pointer"
+              aria-label="Toggle theme"
+            >
+              <img
+                data-icon
+                src="/icons/moon.svg"
+                alt="Toggle theme"
+                class="h-5 w-5"
+              />
+            </button>
+          </nav>
+        </header>
+        <article>
+          <slot />
+        </article>
+      </main>
+
+      <footer class="w-full max-w-3xl mx-auto px-6 md:px-8 py-12 mt-20">
+        <div class="flex items-center justify-between text-sm text-muted-light dark:text-muted-dark">
+          <span>&copy; {year} Dennis Kasper</span>
+          <span class="flex items-center gap-1.5">
+            made with <span class="text-red-500">&#10084;</span>
+          </span>
+        </div>
+      </footer>
+
       <div
         data-banner
-        class="absolute bottom-0 left-0 right-0 px-4 pb-6 bg-gray-200 dark:bg-gray-800 text-center w-full min-w-screen hidden"
+        class="fixed bottom-0 left-0 right-0 z-50 hidden"
       >
-        <p class="text-lg flex justify-center items-center mt-4">
-          This website uses local storage to save your theme preferences. Do you accept?
-        </p>
-        <button
-          data-acceptButton
-          class="m-5 p-3 border-none rounded-md cursor-pointer text-black bg-gray-400 hover:bg-gray-500 dark:text-white dark:bg-gray-500 dark:hover:bg-gray-700"
-        >
-          Accept
-        </button>
-        <button
-          data-declineButton
-          class="m-5 p-3 border-none rounded-md cursor-pointer text-black bg-gray-400 hover:bg-gray-500 dark:text-white dark:bg-gray-500 dark:hover:bg-gray-700"
-        >
-          Decline
-        </button>
+        <div class="max-w-3xl mx-auto px-6 md:px-8 pb-6">
+          <div class="bg-surface-light dark:bg-surface-dark border border-dark/10 dark:border-light/10 rounded-xl px-6 py-5 shadow-lg backdrop-blur-sm">
+            <p class="text-sm mb-4 text-muted-light dark:text-muted-dark">
+              This site uses local storage to remember your theme preference.
+            </p>
+            <div class="flex gap-3">
+              <button
+                data-acceptButton
+                class="px-4 py-2 text-sm font-medium bg-accent text-dark rounded-lg hover:bg-accent-muted transition-colors duration-300 cursor-pointer"
+              >
+                Accept
+              </button>
+              <button
+                data-declineButton
+                class="px-4 py-2 text-sm font-medium text-muted-light dark:text-muted-dark hover:text-dark dark:hover:text-light rounded-lg transition-colors duration-300 cursor-pointer"
+              >
+                Decline
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </main>
+    </div>
   </body>
   <script>
     document.addEventListener('DOMContentLoaded', () => {

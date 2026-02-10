@@ -3,16 +3,43 @@ import Layout from '@layouts/layout.astro'
 ---
 
 <Layout title="home | Dennis Kasper">
-  <h1 class="text-2xl mb-8 font-bold">hi, I am Dennis 👋</h1>
-  <p class="mb-8">
-    I am an engineer with a passion for solving problems and windsurfing. Currently, I work as a full-stack software
-    engineer in the automotive industry.
-  </p>
+  <div class="pt-8 md:pt-16">
+    <!-- Name & Title -->
+    <div class="mb-12 animate-fade-up stagger-1">
+      <p class="text-sm font-medium tracking-widest uppercase text-accent mb-4">Software Engineer</p>
+      <h1 class="font-display text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
+        Dennis<br />Kasper
+      </h1>
+      <div class="w-16 h-[2px] bg-accent rounded-full"></div>
+    </div>
 
-  <figure class="border-l-4 border-gray-300 dark:border-gray-600 pl-4 text-gray-600 dark:text-gray-400 italic">
-    <blockquote>
-      <p>"Make it work, make it right, make it fast."</p>
-    </blockquote>
-    <figcaption class="mt-2 text-sm font-medium not-italic text-gray-500 dark:text-gray-500">— Kent Beck</figcaption>
-  </figure>
+    <!-- Bio -->
+    <div class="max-w-lg animate-fade-up stagger-2">
+      <p class="text-lg leading-relaxed text-muted-light dark:text-muted-dark mb-10">
+        Engineer with a passion for solving problems and windsurfing. Building full-stack software in the automotive industry, from cloud infrastructure to data platforms.
+      </p>
+    </div>
+
+    <!-- Quote -->
+    <figure class="max-w-md animate-fade-up stagger-3">
+      <div class="relative pl-6">
+        <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-accent to-accent/20 rounded-full"></div>
+        <blockquote>
+          <p class="font-display text-xl italic leading-relaxed text-dark/70 dark:text-light/70">
+            "Make it work, make it right, make it fast."
+          </p>
+        </blockquote>
+        <figcaption class="mt-3 text-sm font-medium text-muted-light dark:text-muted-dark tracking-wide">
+          Kent Beck
+        </figcaption>
+      </div>
+    </figure>
+
+    <!-- Decorative element -->
+    <div class="mt-24 flex items-center gap-3 animate-fade-up stagger-4">
+      <span class="inline-block w-1.5 h-1.5 rounded-full bg-accent/40"></span>
+      <span class="inline-block w-1 h-1 rounded-full bg-accent/25"></span>
+      <span class="inline-block w-0.5 h-0.5 rounded-full bg-accent/15"></span>
+    </div>
+  </div>
 </Layout>
