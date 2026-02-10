@@ -56,7 +56,11 @@ This is a personal homepage built with Astro and TailwindCSS. The architecture i
 - `src/layouts/`: Base layout template with header, footer, and theme switching
 - `src/pages/`: Route pages (index, 404, resume)
 - `public/`: Static assets (icons, resume PDF, global CSS)
+- `scripts/`: Build scripts (fetch-resume.ts)
 - `tests/`: Playwright test specifications
+
+**Resume Fetching:**
+The resume page (`src/pages/resume.md`) and PDF (`public/resume.pdf`) are generated at build time by `scripts/fetch-resume.ts`, which pulls content from the [denniskasper/resume](https://github.com/denniskasper/resume) repo. Both files are gitignored. The script runs automatically as a `prebuild`/`predev` hook.
 
 **Theme System:**
 The site implements a dark/light theme toggle using:

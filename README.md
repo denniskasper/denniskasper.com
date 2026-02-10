@@ -6,7 +6,7 @@ My personal homepage.
 
 ## getting started
 
-**Requirements:** Docker, Docker Compose, Node.js
+**Requirements:** Node.js, pnpm, Docker (optional)
 
 Local development
 
@@ -50,9 +50,6 @@ pnpm pw:test
 
 ## stack
 
-[astro](https://astro.build/)  
+[astro](https://astro.build/)
 [tailwindcss](https://tailwindcss.com/)
-
-## icons
-
-[iconify](https://iconify.design/)
+[playwright](https://playwright.dev/)
