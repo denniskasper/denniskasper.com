@@ -98,9 +98,11 @@ const year = new Date().getFullYear()
         </div>
       </footer>
 
-      <div
+      <dialog
         data-banner
-        class="fixed bottom-0 left-0 right-0 z-50 hidden"
+        role="alertdialog"
+        aria-label="Storage consent"
+        class="fixed bottom-0 left-0 right-0 z-50 border-none bg-transparent p-0"
       >
         <div class="max-w-3xl mx-auto px-4 sm:px-6 md:px-8 pb-6">
           <div class="bg-surface-light dark:bg-surface-dark border border-dark/10 dark:border-light/10 rounded-xl px-6 py-5 shadow-lg backdrop-blur-sm">
@@ -123,7 +125,7 @@ const year = new Date().getFullYear()
             </div>
           </div>
         </div>
-      </div>
+      </dialog>
     </div>
   </body>
   <script>
@@ -143,22 +145,18 @@ const year = new Date().getFullYear()
       const storageAccepted = localStorage.getItem(localStorageAccept)
 
       if (storageAccepted === null) {
-        banner.style.display = 'block'
-      }
-
-      if (storageAccepted === 'false') {
-        banner.style.display = 'none'
+        banner.show()
       }
 
       acceptButton.addEventListener('click', () => {
         localStorage.setItem(localStorageAccept, 'true')
-        banner.style.display = 'none'
+        banner.close()
 
         localStorage.setItem(localStorageTheme, currentTheme)
       })
 
       declineButton.addEventListener('click', () => {
-        banner.style.display = 'none'
+        banner.close()
         localStorage.setItem(localStorageAccept, 'false')
       })
 
