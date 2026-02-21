@@ -23,13 +23,11 @@ layout: '../layouts/layout.astro'
 author: 'Dennis Kasper'
 ---`
 
-const DOWNLOAD_BUTTON = `<a href="/resume.pdf" download="dennis-kasper-resume.pdf">
-    <button class="group flex items-center gap-2 bg-accent/15 text-accent-muted dark:text-accent-light border border-accent/20 px-4 py-2 rounded-lg hover:bg-accent/25 hover:border-accent/40 transition-all duration-300 text-sm font-medium cursor-pointer">
-      <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-      </svg>
-      Download
-    </button>
+const DOWNLOAD_BUTTON = `<a href="/resume.pdf" download="dennis-kasper-resume.pdf" class="group flex items-center gap-2 bg-accent/15 text-accent-muted dark:text-accent-light border border-accent/20 px-4 py-2.5 rounded-lg hover:bg-accent/25 hover:border-accent/40 transition-all duration-300 text-sm font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-light dark:focus-visible:ring-offset-dark">
+    <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>
+    Download
   </a>`
 
 async function fetchMarkdown(): Promise<void> {
@@ -48,7 +46,7 @@ async function fetchMarkdown(): Promise<void> {
   // Replace h1 name with flex container including download button
   markdown = markdown.replace(
     /^# (.+)$/m,
-    `<div class="flex justify-between items-center mb-2">
+    `<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-2">
   <h1 class="text-3xl font-bold m-0 font-display">$1</h1>
   ${DOWNLOAD_BUTTON}
 </div>`

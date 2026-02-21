@@ -30,8 +30,6 @@ const config: Config = {
       animation: {
         'fade-up': 'fadeUp 0.8s ease both',
         'fade-in': 'fadeIn 0.6s ease both',
-        'slide-in': 'slideIn 0.5s ease both',
-        'width-grow': 'widthGrow 0.8s ease both',
       },
       keyframes: {
         fadeUp: {
@@ -41,14 +39,6 @@ const config: Config = {
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
-        },
-        slideIn: {
-          '0%': { opacity: '0', transform: 'translateX(-16px)' },
-          '100%': { opacity: '1', transform: 'translateX(0)' },
-        },
-        widthGrow: {
-          '0%': { width: '0%' },
-          '100%': { width: '100%' },
         },
       },
     },

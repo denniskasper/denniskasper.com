@@ -1,3 +1,14 @@
+/* ─── CSS Custom Properties ─── */
+:root {
+  --color-accent: #c8a45e;
+  --color-dark: #111110;
+  --color-muted: #8a847a;
+}
+
+html.dark {
+  --color-muted: #6b6560;
+}
+
 /* ─── Base ─── */
 html {
   overflow-y: scroll;
@@ -9,8 +20,8 @@ body {
 }
 
 ::selection {
-  background-color: #c8a45e;
-  color: #111110;
+  background-color: var(--color-accent);
+  color: var(--color-dark);
 }
 
 /* ─── Subtle noise texture overlay ─── */
@@ -34,7 +45,7 @@ body::after {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #c8a45e, transparent);
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
   z-index: 10000;
   animation: accentLine 2s ease forwards;
 }
@@ -43,6 +54,29 @@ body::after {
   0% { transform: scaleX(0); opacity: 1; }
   60% { transform: scaleX(1); opacity: 1; }
   100% { transform: scaleX(1); opacity: 0; }
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  body::after {
+    animation: none;
+    opacity: 0;
+  }
+
+  .animate-fade-in,
+  .animate-fade-up {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .stagger-1,
+  .stagger-2,
+  .stagger-3,
+  .stagger-4,
+  .stagger-5 {
+    animation-delay: 0s !important;
+  }
 }
 
 /* ─── Links ─── */
@@ -99,47 +133,26 @@ a {
 }
 
 .markdown-content ul li::marker {
-  color: #c8a45e;
+  color: var(--color-accent);
 }
 
 .markdown-content a {
-  color: #c8a45e;
+  color: var(--color-accent);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   transition: border-color 0.3s ease;
 }
 
 .markdown-content a:hover {
-  border-bottom-color: #c8a45e;
+  border-bottom-color: var(--color-accent);
 }
 
 .markdown-content em {
-  color: #8a847a;
-}
-
-.dark .markdown-content em {
-  color: #6b6560;
+  color: var(--color-muted);
 }
 
 .markdown-content strong {
   font-weight: 600;
-}
-
-/* ─── Expertise / About sections ─── */
-.expertise-section {
-  margin-top: 15px;
-}
-
-.expertise-section > ul > li {
-  margin-bottom: 1.5em;
-}
-
-.expertise-section > ul > li:last-child {
-  margin-bottom: 0;
-}
-
-.about-me-section {
-  margin-top: 15px;
 }
 
 /* ─── Stagger animation delays ─── */

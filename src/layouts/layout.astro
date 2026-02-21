@@ -29,6 +29,13 @@ const year = new Date().getFullYear()
       type="image/svg+xml"
     />
     <title>{pageTitle}</title>
+    <meta name="description" content="Dennis Kasper - Software engineer building full-stack software in the automotive industry, from cloud infrastructure to data platforms." />
+    <meta name="theme-color" content="#f0ece4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content="Engineer with a passion for solving problems and windsurfing. Building full-stack software in the automotive industry." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://denniskasper.com" />
     <link
       rel="preconnect"
       href="https://fonts.googleapis.com"
@@ -49,9 +56,9 @@ const year = new Date().getFullYear()
   </head>
   <body class="bg-light dark:bg-dark text-dark dark:text-light font-body text-base leading-relaxed antialiased">
     <div class="min-h-screen flex flex-col">
-      <main class="w-full max-w-3xl mx-auto px-6 md:px-8 flex-1">
-        <header class="flex items-center justify-between pt-10 pb-16 md:pt-14 md:pb-20 animate-fade-in">
-          <nav class="flex items-center gap-x-8">
+      <main class="w-full max-w-3xl mx-auto px-4 sm:px-6 md:px-8 flex-1 pb-24 sm:pb-0">
+        <header class="flex items-center justify-between pt-8 pb-12 sm:pt-10 sm:pb-16 md:pt-14 md:pb-20 animate-fade-in">
+          <nav class="flex items-center gap-x-4 sm:gap-x-6 md:gap-x-8">
             <NavLink
               title="home"
               url="/"
@@ -72,7 +79,7 @@ const year = new Date().getFullYear()
             />
             <button
               data-icon-btn
-              class="ml-3 p-1.5 rounded-full hover:bg-dark/5 dark:hover:bg-light/5 transition-colors duration-300 cursor-pointer"
+              class="ml-3 p-2.5 rounded-full hover:bg-dark/5 dark:hover:bg-light/5 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-light dark:focus-visible:ring-offset-dark"
               aria-label="Toggle theme"
             >
               <img
@@ -89,7 +96,7 @@ const year = new Date().getFullYear()
         </article>
       </main>
 
-      <footer class="w-full max-w-3xl mx-auto px-6 md:px-8 py-12 mt-20">
+      <footer class="w-full max-w-3xl mx-auto px-4 sm:px-6 md:px-8 py-12 mt-20">
         <div class="flex items-center justify-between text-sm text-muted-light dark:text-muted-dark">
           <span>&copy; {year} Dennis Kasper</span>
           <span class="flex items-center gap-1.5">
@@ -102,7 +109,7 @@ const year = new Date().getFullYear()
         data-banner
         class="fixed bottom-0 left-0 right-0 z-50 hidden"
       >
-        <div class="max-w-3xl mx-auto px-6 md:px-8 pb-6">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 md:px-8 pb-6">
           <div class="bg-surface-light dark:bg-surface-dark border border-dark/10 dark:border-light/10 rounded-xl px-6 py-5 shadow-lg backdrop-blur-sm">
             <p class="text-sm mb-4 text-muted-light dark:text-muted-dark">
               This site uses local storage to remember your theme preference.
@@ -110,13 +117,13 @@ const year = new Date().getFullYear()
             <div class="flex gap-3">
               <button
                 data-acceptButton
-                class="px-4 py-2 text-sm font-medium bg-accent text-dark rounded-lg hover:bg-accent-muted transition-colors duration-300 cursor-pointer"
+                class="px-4 py-2.5 text-sm font-medium bg-accent text-dark rounded-lg hover:bg-accent-muted transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-light dark:focus-visible:ring-offset-surface-dark"
               >
                 Accept
               </button>
               <button
                 data-declineButton
-                class="px-4 py-2 text-sm font-medium text-muted-light dark:text-muted-dark hover:text-dark dark:hover:text-light rounded-lg transition-colors duration-300 cursor-pointer"
+                class="px-4 py-2.5 text-sm font-medium text-muted-light dark:text-muted-dark hover:text-dark dark:hover:text-light rounded-lg transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-light dark:focus-visible:ring-offset-surface-dark"
               >
                 Decline
               </button>
@@ -162,9 +169,9 @@ const year = new Date().getFullYear()
         localStorage.setItem(localStorageAccept, 'false')
       })
 
-      const locaStorageTheme = localStorage.getItem(localStorageTheme)
+      const savedTheme = localStorage.getItem(localStorageTheme)
 
-      if (locaStorageTheme === 'dark') {
+      if (savedTheme === 'dark') {
         document.documentElement.classList.add('dark')
         icon.src = iconSunSource
         currentTheme = 'dark'
