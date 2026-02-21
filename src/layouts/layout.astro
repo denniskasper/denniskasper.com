@@ -37,22 +37,15 @@ const year = new Date().getFullYear()
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://denniskasper.com" />
     <link
-      rel="preconnect"
-      href="https://fonts.googleapis.com"
-    />
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    <link
       rel="stylesheet"
       href="/styles/global.css"
     />
+    <script is:inline>
+      (function() {
+        var saved = localStorage.getItem('denniskasper.com-theme')
+        if (saved === 'dark') document.documentElement.classList.add('dark')
+      })()
+    </script>
   </head>
   <body class="bg-light dark:bg-dark text-dark dark:text-light font-body text-base leading-relaxed antialiased">
     <div class="min-h-screen flex flex-col">
@@ -140,7 +133,7 @@ const year = new Date().getFullYear()
 
       const iconSunSource = '/icons/sun.svg'
 
-      let currentTheme = 'light'
+      let currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
 
       const banner = document.querySelector('[data-banner]') as HTMLDialogElement
       const acceptButton = document.querySelector('[data-acceptButton]') as HTMLButtonElement
@@ -169,12 +162,9 @@ const year = new Date().getFullYear()
         localStorage.setItem(localStorageAccept, 'false')
       })
 
-      const savedTheme = localStorage.getItem(localStorageTheme)
-
-      if (savedTheme === 'dark') {
-        document.documentElement.classList.add('dark')
+      // Sync icon to match theme already applied by head script
+      if (currentTheme === 'dark') {
         icon.src = iconSunSource
-        currentTheme = 'dark'
       }
 
       icon?.addEventListener('click', () => {

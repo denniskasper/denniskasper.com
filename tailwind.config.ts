@@ -25,7 +25,6 @@ const config: Config = {
       fontFamily: {
         display: ['"Playfair Display"', 'Georgia', 'serif'],
         body: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
       },
       animation: {
         'fade-up': 'fadeUp 0.8s ease both',
