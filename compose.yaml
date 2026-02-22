@@ -10,10 +10,25 @@ services:
       - '4321:4321'
     environment:
       NODE_ENV: development
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:4321/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
     develop:
       watch:
         - action: sync
           path: ./src
           target: /app/src
+        - action: sync
+          path: ./public
+          target: /app/public
         - action: rebuild
           path: package.json
+        - action: rebuild
+          path: pnpm-lock.yaml

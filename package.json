@@ -28,6 +28,7 @@
     "@types/node": "^22.0.0",
     "tsx": "^4.21.0"
   },
+  "packageManager": "pnpm@10.18.2",
   "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild",
