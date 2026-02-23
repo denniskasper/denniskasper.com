@@ -10,7 +10,7 @@ services:
     environment:
       NODE_ENV: development
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:4321/"]
+      test: ["CMD", "node", "-e", "fetch('http://localhost:4321/').then(r => { if (!r.ok) process.exit(1) }).catch(() => process.exit(1))"]
       interval: 10s
       timeout: 5s
       retries: 5
