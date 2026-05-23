@@ -1,4 +1,5 @@
 ---
+import { execSync } from 'node:child_process'
 import NavLink from '@components/nav-link.astro'
 import NavSocial from '@components/nav-social.astro'
 import '../styles/global.css'
@@ -14,6 +15,10 @@ const { title } = Astro.props as Props
 const pageTitle = title || Astro.props.frontmatter?.title
 
 const year = new Date().getFullYear()
+
+const commitHash = import.meta.env.DEV
+  ? execSync('git rev-parse --short HEAD').toString().trim()
+  : null
 ---
 
 <!doctype html>
@@ -115,7 +120,8 @@ const year = new Date().getFullYear()
         <div class="flex items-center justify-between text-sm text-muted-light dark:text-muted-dark">
           <span>&copy; {year} Dennis Kasper</span>
           <span class="flex items-center gap-1.5">
-            made with <span class="text-red-500 text-xs leading-none translate-y-[2px]">&#10084;</span>
+            {commitHash && <span class="font-mono opacity-40">{commitHash}</span>}
+            made with <span class="text-red-500 text-sm leading-none translate-y-[0.5px]">&#10084;</span>
           </span>
         </div>
       </footer>
