@@ -1,7 +1,5 @@
 # denniskasper.com
 
-[![Deploy](https://github.com/DennisKasper/denniskasper.com/actions/workflows/build-deploy.yaml/badge.svg)](https://github.com/DennisKasper/denniskasper.com/actions/workflows/build-deploy.yaml)
-
 My personal homepage.
 
 ## getting started
@@ -13,24 +11,6 @@ Local development
 ```console
 pnpm install
 pnpm dev
-```
-
-or using docker compose
-
-```console
-make watch
-```
-
-Building the production image
-
-```console
-make build-prod
-```
-
-Remove everything
-
-```console
-make destroy
 ```
 
 ## running tests
@@ -50,6 +30,6 @@ pnpm pw:test
 
 ## stack
 
-[astro](https://astro.build/)
-[tailwindcss](https://tailwindcss.com/)
+[astro](https://astro.build/)  
+[tailwindcss](https://tailwindcss.com/)  
 [playwright](https://playwright.dev/)
