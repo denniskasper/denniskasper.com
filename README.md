@@ -33,3 +33,7 @@ pnpm pw:test
 [astro](https://astro.build/)  
 [tailwindcss](https://tailwindcss.com/)  
 [playwright](https://playwright.dev/)
+
+## deployment
+
+Deployed by [Dokploy](https://dokploy.com/) — push to `main` auto-builds and redeploys. Server, deploy tunnel, and DNS are documented in the [denniskasper.dev](https://github.com/denniskasper/denniskasper.dev) repo.

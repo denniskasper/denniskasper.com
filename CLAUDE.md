@@ -43,6 +43,12 @@ make destroy   # Remove all containers, images, and volumes
 make logs      # View logs
 ```
 
+## Deployment
+
+Production (`https://denniskasper.com`) runs on self-hosted **Dokploy** (Strato VPS). Push to `main` → Dokploy auto-builds and redeploys via a GitHub App webhook (`deploy.denniskasper.com`). The site is served behind Traefik on **port 8080** — the domain's target port in Dokploy must match this (port 80 yields a 502). The Dokploy admin panel is reachable only over Tailscale.
+
+Server provisioning, the deploy tunnel, and Cloudflare/DNS live in the **[denniskasper.dev](https://github.com/denniskasper/denniskasper.dev)** repo — see its `README.md` (re-provisioning runbook) and `docs/dashboard.html`.
+
 ## Architecture
 
 This is a personal homepage built with Astro and TailwindCSS. The architecture is straightforward:
