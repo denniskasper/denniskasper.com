@@ -43,6 +43,18 @@ async function fetchMarkdown(): Promise<void> {
   // Remove the profile photo img tag (not needed for web version)
   markdown = markdown.replace(/<img[^>]*profile-photo[^>]*>\n*/i, '')
 
+  // Drop the self-referential homepage link from the contact line — redundant on
+  // the site itself. The PDF keeps it (it is built in the resume repo).
+  markdown = markdown.replace(/\s*\|\s*\[denniskasper\.com\]\([^)]*\)/i, '')
+  markdown = markdown.replace(/\[denniskasper\.com\]\([^)]*\)\s*\|\s*/i, '')
+
+  // Fail the build rather than silently shipping the link if the upstream
+  // contact line is ever reworded and the patterns above stop matching.
+  const contactLine = markdown.split('\n').find((line) => line.includes('mailto:')) ?? ''
+  if (/denniskasper\.com/i.test(contactLine)) {
+    throw new Error('Failed to strip the denniskasper.com link — the upstream contact line format changed.')
+  }
+
   // Replace h1 name with flex container including download button
   markdown = markdown.replace(
     /^# (.+)$/m,
