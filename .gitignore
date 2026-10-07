@@ -33,9 +33,14 @@ pnpm-debug.log*
 /blob-report/
 /playwright/.cache/
 
-# docs
-docs/
+# docs (only agent config and ADRs are tracked)
+docs/*
+!docs/agents/
+!docs/adr/
 
 # claude code
 .agents/
 .claude/
+
+# wrangler local state
+.wrangler/

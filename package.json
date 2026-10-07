@@ -7,8 +7,6 @@
     "fetch-resume": "tsx scripts/fetch-resume.ts",
     "predev": "tsx scripts/fetch-resume.ts",
     "dev": "astro dev",
-    "predev-watch": "tsx scripts/fetch-resume.ts",
-    "dev-watch": "astro dev --host",
     "start": "pnpm dev",
     "prebuild": "tsx scripts/fetch-resume.ts",
     "build": "astro build",
