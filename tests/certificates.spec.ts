@@ -29,7 +29,7 @@ test('certification links on the resume open their certificate in a new tab', as
   await page.goto(`${BASE_URL}/resume`)
 
   // The links are authored in the resume repo, so there are none until it adds them.
-  const links = await page.locator('a[href*="/certificates/"]').all()
+  const links = await page.locator('h2#certifications + ul a').all()
 
   for (const link of links) {
     const href = await link.getAttribute('href')
