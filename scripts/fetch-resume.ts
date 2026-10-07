@@ -49,7 +49,7 @@ async function loadMarkdown(): Promise<string> {
   return response.text()
 }
 
-async function fetchMarkdown(): Promise<void> {
+async function writeResumePage(): Promise<void> {
   let markdown = await loadMarkdown()
 
   // Remove the profile photo img tag (not needed for web version)
@@ -122,7 +122,7 @@ async function fetchPdf(): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  await fetchMarkdown()
+  await writeResumePage()
   await fetchPdf()
 }
 
