@@ -1,15 +1,12 @@
+import { readdirSync } from 'fs'
 import { test, expect, type APIRequestContext } from '@playwright/test'
 
 const BASE_URL = 'http://localhost:4321'
 
-const CERTIFICATE_PATHS = [
-  '/certificates/deep-learning-specialization.pdf',
-  '/certificates/tensorflow-developer.pdf',
-  '/certificates/model-order-reduction.pdf',
-  '/certificates/msmd-battery-module.pdf',
-  '/certificates/cfd-with-cad-preparation-and-meshing.pdf',
-  '/certificates/dymola-and-modelica.pdf',
-]
+// Every PDF in public/certificates/ is a published certificate.
+const CERTIFICATE_PATHS = readdirSync('public/certificates')
+  .filter((file) => file.endsWith('.pdf'))
+  .map((file) => `/certificates/${file}`)
 
 async function expectPdf(request: APIRequestContext, path: string): Promise<void> {
   const response = await request.get(`${BASE_URL}${path}`)
@@ -20,6 +17,8 @@ async function expectPdf(request: APIRequestContext, path: string): Promise<void
 }
 
 test('every certificate is served as a PDF', async ({ request }) => {
+  expect(CERTIFICATE_PATHS).not.toHaveLength(0)
+
   for (const path of CERTIFICATE_PATHS) {
     await expectPdf(request, path)
   }
