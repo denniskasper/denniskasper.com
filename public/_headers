@@ -13,3 +13,7 @@
 
 /fonts/*
   Cache-Control: public, max-age=2592000
+
+# Certificates stay reachable by link but out of search results.
+/certificates/*
+  X-Robots-Tag: noindex

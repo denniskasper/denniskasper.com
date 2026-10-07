@@ -7,12 +7,15 @@
  * Source: https://github.com/denniskasper/resume
  */
 
-import { writeFile, mkdir } from 'fs/promises'
+import { readFile, writeFile, mkdir } from 'fs/promises'
 import { dirname, join } from 'path'
 
 const REPO = 'denniskasper/resume'
 const RESUME_MD_URL = `https://raw.githubusercontent.com/${REPO}/main/dennis_kasper_resume.md`
 const RESUME_PDF_URL = `https://github.com/${REPO}/releases/latest/download/dennis_kasper_resume.pdf`
+
+// Set to a local checkout's markdown file to preview unpublished resume changes.
+const LOCAL_RESUME_MD_PATH = process.env.RESUME_MD_PATH
 
 const OUTPUT_MD_PATH = 'src/pages/resume.md'
 const OUTPUT_PDF_PATH = 'public/resume.pdf'
@@ -30,7 +33,12 @@ const DOWNLOAD_BUTTON = `<a href="/resume.pdf" download="dennis-kasper-resume.pd
     Download
   </a>`
 
-async function fetchMarkdown(): Promise<void> {
+async function loadMarkdown(): Promise<string> {
+  if (LOCAL_RESUME_MD_PATH) {
+    console.log(`Reading markdown from ${LOCAL_RESUME_MD_PATH}...`)
+    return readFile(LOCAL_RESUME_MD_PATH, 'utf-8')
+  }
+
   console.log(`Fetching markdown from ${RESUME_MD_URL}...`)
 
   const response = await fetch(RESUME_MD_URL)
@@ -38,7 +46,11 @@ async function fetchMarkdown(): Promise<void> {
     throw new Error(`Failed to fetch markdown: ${response.status} ${response.statusText}`)
   }
 
-  let markdown = await response.text()
+  return response.text()
+}
+
+async function fetchMarkdown(): Promise<void> {
+  let markdown = await loadMarkdown()
 
   // Remove the profile photo img tag (not needed for web version)
   markdown = markdown.replace(/<img[^>]*profile-photo[^>]*>\n*/i, '')
@@ -54,6 +66,13 @@ async function fetchMarkdown(): Promise<void> {
   if (/denniskasper\.com/i.test(contactLine)) {
     throw new Error('Failed to strip the denniskasper.com link — the upstream contact line format changed.')
   }
+
+  // Certificate links are absolute upstream so they also work in the PDF. On the
+  // site, serve them from the current origin and open them in a new tab.
+  markdown = markdown.replace(
+    /\[([^\]]+)\]\(https:\/\/denniskasper\.com(\/certificates\/[^)\s]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener">$1</a>'
+  )
 
   // Replace h1 name with flex container including download button
   markdown = markdown.replace(
