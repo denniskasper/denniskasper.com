@@ -1,10 +1,10 @@
 # denniskasper.com
 
-My personal homepage.
+My personal homepage, live at [denniskasper.com](https://denniskasper.com).
 
 ## getting started
 
-**Requirements:** Node.js, pnpm, Docker (optional)
+**Requirements:** Node.js 24 (pinned in `.node-version`), pnpm
 
 Local development
 
@@ -12,6 +12,12 @@ Local development
 pnpm install
 pnpm dev
 ```
+
+The dev server runs at `http://localhost:4321`.
+
+## resume
+
+The resume page and PDF are not stored in this repo. `pnpm dev` and `pnpm build` fetch them from [denniskasper/resume](https://github.com/denniskasper/resume) first, writing `src/pages/resume.md` and `public/resume.pdf` (both gitignored).
 
 ## running tests
 
@@ -32,8 +38,9 @@ pnpm pw:test
 
 [astro](https://astro.build/)  
 [tailwindcss](https://tailwindcss.com/)  
-[playwright](https://playwright.dev/)
+[playwright](https://playwright.dev/)  
+[cloudflare workers](https://developers.cloudflare.com/workers/static-assets/)
 
 ## deployment
 
-Deployed by [Dokploy](https://dokploy.com/) — push to `main` auto-builds and redeploys. Server, deploy tunnel, and DNS are documented in the [denniskasper.dev](https://github.com/denniskasper/denniskasper.dev) repo.
+Deployed on [Cloudflare Workers](https://developers.cloudflare.com/workers/static-assets/) as static assets — push to `main` builds and redeploys. Config lives in `wrangler.jsonc`.
