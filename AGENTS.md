@@ -43,12 +43,15 @@ This is a personal homepage built with Astro and TailwindCSS. The architecture i
 - `src/components/`: Reusable Astro components (nav-link, nav-social)
 - `src/layouts/`: Base layout template with header, footer, and theme switching
 - `src/pages/`: Route pages (index, 404, resume)
-- `public/`: Static assets (icons, resume PDF, global CSS)
+- `public/`: Static assets (icons, fonts, resume PDF, `_headers`)
+- `public/certificates/`: The six Certificate PDFs linked from the resume, served with `X-Robots-Tag: noindex`
 - `scripts/`: Build scripts (fetch-resume.ts)
 - `tests/`: Playwright test specifications
 
 **Resume Fetching:**
 The resume page (`src/pages/resume.md`) and PDF (`public/resume.pdf`) are generated at build time by `scripts/fetch-resume.ts`, which pulls content from the [denniskasper/resume](https://github.com/denniskasper/resume) repo. Both files are gitignored. The script runs automatically as a `prebuild`/`predev` hook.
+
+Set `RESUME_MD_PATH` to a local checkout's markdown file to build against unpublished resume changes, e.g. `RESUME_MD_PATH=~/workspace/resume/dennis_kasper_resume.md pnpm build`. The script also rewrites the resume's absolute `https://denniskasper.com/certificates/…` links to same-origin links that open in a new tab.
 
 **Theme System:**
 The site implements a dark/light theme toggle using:
