@@ -41,3 +41,6 @@ docs/*
 # claude code
 .agents/
 .claude/
+
+# wrangler local state
+.wrangler/
