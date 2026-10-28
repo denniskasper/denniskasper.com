@@ -6,13 +6,32 @@ import '../styles/global.css'
 
 export interface Props {
   title?: string
+  description?: string
+  noindex?: boolean
   frontmatter?: {
     title?: string
+    description?: string
   }
 }
 
-const { title } = Astro.props as Props
-const pageTitle = title || Astro.props.frontmatter?.title
+const DEFAULT_DESCRIPTION =
+  'Dennis Kasper, AI, DevOps and simulation engineer building software in the automotive industry, from cloud infrastructure to data platforms.'
+
+const { title, description, noindex = false, frontmatter } = Astro.props as Props
+const pageTitle = title || frontmatter?.title
+const pageDescription = description || frontmatter?.description || DEFAULT_DESCRIPTION
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site)
+const ogImageUrl = new URL('/og-image.png', Astro.site)
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Dennis Kasper',
+  url: Astro.site?.href,
+  image: ogImageUrl.href,
+  jobTitle: ['AI Engineer', 'DevOps Engineer', 'Simulation Engineer'],
+  sameAs: ['https://github.com/denniskasper', 'https://www.linkedin.com/in/denniskasper'],
+}
 
 const year = new Date().getFullYear()
 
@@ -34,11 +53,16 @@ const commitHash = import.meta.env.DEV
       href="/favicon.svg"
       type="image/svg+xml"
     />
+    <link
+      rel="apple-touch-icon"
+      href="/apple-touch-icon.png"
+    />
     <title>{pageTitle}</title>
     <meta
       name="description"
-      content="Dennis Kasper - Software engineer building full-stack software in the automotive industry, from cloud infrastructure to data platforms."
+      content={pageDescription}
     />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonicalUrl} />}
     <meta
       name="theme-color"
       content="#f0ece4"
@@ -46,7 +70,7 @@ const commitHash = import.meta.env.DEV
     />
     <meta
       name="theme-color"
-      content="#111110"
+      content="#13181a"
       media="(prefers-color-scheme: dark)"
     />
     <meta
@@ -55,7 +79,7 @@ const commitHash = import.meta.env.DEV
     />
     <meta
       property="og:description"
-      content="Engineer with a passion for solving problems and windsurfing. Building full-stack software in the automotive industry."
+      content={pageDescription}
     />
     <meta
       property="og:type"
@@ -63,12 +87,41 @@ const commitHash = import.meta.env.DEV
     />
     <meta
       property="og:url"
-      content="https://denniskasper.com"
+      content={canonicalUrl}
+    />
+    <meta
+      property="og:site_name"
+      content="Dennis Kasper"
+    />
+    <meta
+      property="og:image"
+      content={ogImageUrl}
+    />
+    <meta
+      property="og:image:width"
+      content="1200"
+    />
+    <meta
+      property="og:image:height"
+      content="630"
+    />
+    <meta
+      property="og:image:alt"
+      content="Dennis Kasper, AI, DevOps and simulation engineer, over a photo of him windsurfing in Hvide Sande"
+    />
+    <meta
+      name="twitter:card"
+      content="summary_large_image"
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(personJsonLd)}
     />
     <script is:inline>
       ;(function () {
         var saved = localStorage.getItem('denniskasper.com-theme')
-        if (saved === 'dark') document.documentElement.classList.add('dark')
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (saved === 'dark' || (saved === null && prefersDark)) document.documentElement.classList.add('dark')
       })()
     </script>
   </head>
@@ -76,15 +129,15 @@ const commitHash = import.meta.env.DEV
     <div class="min-h-screen flex flex-col">
       <main class="w-full max-w-3xl mx-auto px-4 sm:px-6 md:px-8 flex-1 pb-24 sm:pb-0">
         <header
-          class="flex items-center justify-between pt-8 pb-12 sm:pt-10 sm:pb-16 md:pt-14 md:pb-20 animate-fade-in"
+          class="flex items-center justify-between pt-8 pb-12 sm:pt-10 sm:pb-16 md:pt-14 md:pb-20"
         >
           <nav class="flex items-center gap-x-4 sm:gap-x-6 md:gap-x-8">
             <NavLink
-              title="home"
+              title="Home"
               url="/"
             />
             <NavLink
-              title="resume"
+              title="Resume"
               url="/resume/"
             />
           </nav>
@@ -95,7 +148,7 @@ const commitHash = import.meta.env.DEV
             />
             <NavSocial
               icon="linkedin"
-              link="https://www.linkedin.com/in/dennis-kasper-995b2112b"
+              link="https://www.linkedin.com/in/denniskasper"
             />
             <button
               data-icon-btn
@@ -105,7 +158,7 @@ const commitHash = import.meta.env.DEV
               <img
                 data-icon
                 src="/icons/moon.svg"
-                alt="Toggle theme"
+                alt=""
                 class="h-5 w-5"
               />
             </button>
@@ -119,103 +172,50 @@ const commitHash = import.meta.env.DEV
       <footer class="w-full max-w-3xl mx-auto px-4 sm:px-6 md:px-8 py-12 mt-20">
         <div class="flex items-center justify-between text-sm text-muted-light dark:text-muted-dark">
           <span>&copy; {year} Dennis Kasper</span>
-          <span class="flex items-center gap-1.5">
-            {commitHash && <span class="font-mono opacity-40">{commitHash}</span>}
-            made with <span class="text-red-500 text-sm leading-none translate-y-[0.5px]">&#10084;</span>
+          <span class="flex items-baseline gap-1.5">
+            {commitHash && <span class="font-mono text-xs leading-none opacity-40 mr-1.5">{commitHash}</span>}
+            <a
+              href="https://github.com/denniskasper/denniskasper.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Source on GitHub (opens in new tab)"
+              class="hover:text-dark dark:hover:text-light transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-light dark:focus-visible:ring-offset-dark rounded-sm"
+            >
+              Source on GitHub
+            </a>
           </span>
         </div>
       </footer>
-
-      <dialog
-        data-banner
-        role="alertdialog"
-        aria-label="Storage consent"
-        class="fixed bottom-0 left-0 right-0 z-50 border-none bg-transparent p-0"
-      >
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 md:px-8 pb-6">
-          <div
-            class="bg-surface-light dark:bg-surface-dark border border-dark/10 dark:border-light/10 rounded-xl px-6 py-5 shadow-lg backdrop-blur-sm"
-          >
-            <p class="text-sm mb-4 text-muted-light dark:text-muted-dark">
-              This site uses local storage to remember your theme preference.
-            </p>
-            <div class="flex gap-3">
-              <button
-                data-acceptButton
-                class="px-4 py-2.5 text-sm font-medium bg-accent text-dark rounded-lg hover:bg-accent-muted transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-light dark:focus-visible:ring-offset-surface-dark"
-              >
-                Accept
-              </button>
-              <button
-                data-declineButton
-                class="px-4 py-2.5 text-sm font-medium text-muted-light dark:text-muted-dark hover:text-dark dark:hover:text-light rounded-lg transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-surface-light dark:focus-visible:ring-offset-surface-dark"
-              >
-                Decline
-              </button>
-            </div>
-          </div>
-        </div>
-      </dialog>
     </div>
   </body>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const localStorageAccept = 'denniskasper.com-storageAccepted'
       const localStorageTheme = 'denniskasper.com-theme'
-
       const iconSunSource = '/icons/sun.svg'
 
-      let currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-
-      const banner = document.querySelector('[data-banner]') as HTMLDialogElement
-      const acceptButton = document.querySelector('[data-acceptButton]') as HTMLButtonElement
-      const declineButton = document.querySelector('[data-declineButton]') as HTMLButtonElement
+      const iconButton = document.querySelector('[data-icon-btn]') as HTMLButtonElement
       const icon = document.querySelector('[data-icon]') as HTMLImageElement
 
-      const storageAccepted = localStorage.getItem(localStorageAccept)
-
-      if (storageAccepted === null) {
-        banner.show()
-      }
-
-      acceptButton.addEventListener('click', () => {
-        localStorage.setItem(localStorageAccept, 'true')
-        banner.close()
-
-        localStorage.setItem(localStorageTheme, currentTheme)
-      })
-
-      declineButton.addEventListener('click', () => {
-        banner.close()
-        localStorage.setItem(localStorageAccept, 'false')
-      })
+      // Left over from the removed consent banner
+      localStorage.removeItem('denniskasper.com-storageAccepted')
 
       // Sync icon to match theme already applied by head script
-      if (currentTheme === 'dark') {
+      if (document.documentElement.classList.contains('dark')) {
         icon.src = iconSunSource
       }
 
-      icon?.addEventListener('click', () => {
-        document.documentElement.classList.toggle('dark')
+      iconButton.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark')
 
-        const storageAccepted = localStorage.getItem(localStorageAccept)
-
-        if (document.documentElement.classList.contains('dark')) {
-          icon.src = iconSunSource
-          currentTheme = 'dark'
-
-          if (storageAccepted === 'true') {
-            localStorage.setItem(localStorageTheme, 'dark')
-          }
-        } else {
-          icon.src = '/icons/moon.svg'
-          currentTheme = 'light'
-
-          if (storageAccepted === 'true') {
-            localStorage.setItem(localStorageTheme, 'light')
-          }
-        }
+        icon.src = isDark ? iconSunSource : '/icons/moon.svg'
+        localStorage.setItem(localStorageTheme, isDark ? 'dark' : 'light')
       })
+
+      console.log(
+        '%cDK%c\n\nHey, fellow developer. Curious how this is built?\nSource: https://github.com/denniskasper/denniskasper.com\nSay hi: https://www.linkedin.com/in/denniskasper',
+        'font: 700 48px "Playfair Display", Georgia, serif; color: #c8a45e;',
+        'font: 14px system-ui, sans-serif; color: inherit;',
+      )
     })
   </script>
 </html>

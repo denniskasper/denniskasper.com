@@ -1,32 +1,59 @@
 ---
+import { Picture } from 'astro:assets'
 import Layout from '@layouts/layout.astro'
+import windsurfing from '../assets/windsurfing-hvide-sande.jpg'
 ---
 
-<Layout title="home | Dennis Kasper">
-  <div class="pt-8 md:pt-16">
-    <!-- Name & Title -->
-    <div class="mb-12 animate-fade-up stagger-1">
-      <p class="text-sm font-medium tracking-widest uppercase text-accent mb-4">Software Engineer</p>
-      <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
-        Dennis<br />Kasper
-      </h1>
-      <div class="w-16 h-[2px] bg-accent rounded-full"></div>
-    </div>
+<Layout title="Dennis Kasper | AI, DevOps & Simulation Engineer">
+  <div class="md:pt-4">
+    <!-- Hero: name over the windsurfing photo -->
+    <section
+      class="group relative mb-12 overflow-hidden rounded-2xl bg-dark text-light h-[28rem] sm:h-[26rem]"
+    >
+      <Picture
+        src={windsurfing}
+        formats={['avif', 'webp']}
+        widths={[480, 768, 960]}
+        sizes="(min-width: 768px) 704px, 100vw"
+        alt="Dennis windsurfing, mid-jump above the waves off Hvide Sande, Denmark"
+        loading="eager"
+        fetchpriority="high"
+        class="absolute inset-0 h-full w-full object-cover object-[57%_35%] grayscale brightness-[.95] contrast-[1.1] dark:brightness-[.7] dark:contrast-[1.15] transition-[filter] duration-1000 ease-out group-hover:grayscale-[.4] group-hover:brightness-105 dark:group-hover:brightness-[.8]"
+      />
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-dark from-15% via-dark/50 dark:via-dark/60 via-45% to-transparent to-75% sm:bg-gradient-to-r sm:from-0% sm:via-dark/50 sm:dark:via-dark/70 sm:via-35% sm:to-transparent sm:to-65% sm:dark:to-75%"
+      >
+      </div>
+      <div class="hero-develop absolute inset-0 bg-dark"></div>
+      <div class="hero-reveal relative flex h-full flex-col justify-end sm:justify-center p-6 sm:p-10">
+        <h1 class="font-display text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-[1.02]">
+          Dennis<br />Kasper
+        </h1>
+        <p class="mt-4 max-w-md text-balance font-display text-xl sm:text-2xl italic leading-snug text-light/80">
+          AI, DevOps and simulation engineer
+        </p>
+      </div>
+      <p class="hero-reveal absolute right-4 top-4 sm:top-auto sm:bottom-4 font-display text-sm italic text-dark/70 sm:text-light/70 dark:text-light/70 sm:[text-shadow:0_1px_3px_rgb(0_0_0/0.6)] dark:[text-shadow:0_1px_3px_rgb(0_0_0/0.6)]">
+        Hvide Sande, Denmark
+      </p>
+    </section>
 
     <!-- Bio -->
-    <div class="max-w-lg animate-fade-up stagger-2">
+    <div class="max-w-lg">
       <p class="text-lg leading-relaxed text-muted-light dark:text-muted-dark mb-10">
-        Engineer with a passion for solving problems and windsurfing. Building full-stack software in the automotive industry, from cloud infrastructure to data platforms.
+        Solving problems on land, catching wind on water. I build software for the automotive industry, from cloud
+        infrastructure to data platforms. Four years of battery simulation with CFD and FEM still shape how I approach
+        system design.
       </p>
     </div>
 
     <!-- Quote -->
-    <figure class="max-w-md animate-fade-up stagger-3">
+    <figure class="max-w-md">
       <div class="relative pl-6">
         <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-accent to-accent/20 rounded-full"></div>
         <blockquote>
           <p class="font-display text-xl italic leading-relaxed text-dark/70 dark:text-light/70">
-            "Make it work, make it right, make it fast."
+            &ldquo;Make it work, make it right, make it fast.&rdquo;
           </p>
         </blockquote>
         <figcaption class="mt-3 text-sm font-medium text-muted-light dark:text-muted-dark tracking-wide">
@@ -34,12 +61,5 @@ import Layout from '@layouts/layout.astro'
         </figcaption>
       </div>
     </figure>
-
-    <!-- Decorative element -->
-    <div class="mt-24 flex items-center gap-3 animate-fade-up stagger-4">
-      <span class="inline-block w-1.5 h-1.5 rounded-full bg-accent/40"></span>
-      <span class="inline-block w-1 h-1 rounded-full bg-accent/25"></span>
-      <span class="inline-block w-0.5 h-0.5 rounded-full bg-accent/15"></span>
-    </div>
   </div>
 </Layout>

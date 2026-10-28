@@ -21,7 +21,8 @@ const OUTPUT_MD_PATH = 'src/pages/resume.md'
 const OUTPUT_PDF_PATH = 'public/resume.pdf'
 
 const FRONTMATTER = `---
-title: 'resume | Dennis Kasper'
+title: 'Resume | Dennis Kasper'
+description: 'Resume of Dennis Kasper, AI, DevOps and simulation engineer: experience in full-stack development, cloud infrastructure and data platforms in the automotive industry.'
 layout: '../layouts/layout.astro'
 author: 'Dennis Kasper'
 ---`
