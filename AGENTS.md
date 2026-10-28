@@ -40,10 +40,11 @@ This is a personal homepage built with Astro and TailwindCSS. The architecture i
 - **Playwright**: End-to-end testing framework
 
 **Key directories:**
+- `src/assets/`: Images optimized at build time by `astro:assets` (needs `sharp`), e.g. the homepage hero photo
 - `src/components/`: Reusable Astro components (nav-link, nav-social)
 - `src/layouts/`: Base layout template with header, footer, and theme switching
 - `src/pages/`: Route pages (index, 404, resume)
-- `public/`: Static assets (icons, fonts, resume PDF, `_headers`)
+- `public/`: Static assets (icons, fonts, resume PDF, `_headers`, `robots.txt`, `og-image.png` social preview, `apple-touch-icon.png`)
 - `public/certificates/`: The six Certificate PDFs linked from the resume, served with `X-Robots-Tag: noindex`
 - `scripts/`: Build scripts (fetch-resume.ts)
 - `tests/`: Playwright test specifications
@@ -56,8 +57,11 @@ Set `RESUME_MD_PATH` to a local checkout's markdown file to build against unpubl
 **Theme System:**
 The site implements a dark/light theme toggle using:
 - TailwindCSS dark mode classes
-- Local storage for persistence (with user consent banner)
+- Local storage to remember an explicit toggle (no consent banner: it is strictly necessary for a user-requested feature); otherwise the OS color scheme applies
 - Client-side JavaScript in the layout for theme switching logic
+
+**SEO:**
+The layout emits the canonical URL, Open Graph/Twitter tags and `Person` JSON-LD for every page. Pages pass `title` and `description` as props (or frontmatter for `resume.md`); pass `noindex` to drop the canonical and add `robots: noindex`. `@astrojs/sitemap` generates `sitemap-index.xml`.
 
 **Import Aliases:**
 - `@components/*` → `src/components/*`
