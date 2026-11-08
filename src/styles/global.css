@@ -14,12 +14,11 @@
   /* Muted text meets WCAG AA (4.5:1) on its background */
   --color-muted-light: #6e685f;
   --color-muted-dark: #8c9396;
-  /* Gold dark enough for text on the light background */
-  --color-accent-ink: #7f652c;
+  /* Gold dark enough for text (4.5:1) on the light background and on accent tints up to /25 */
+  --color-accent-ink: #705927;
 
   --font-display: "Playfair Display", Georgia, serif;
   --font-body: "Source Sans 3", system-ui, sans-serif;
-
 
   --duration-400: 400ms;
 }
@@ -115,10 +114,6 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  font-family: 'Source Sans 3', system-ui, sans-serif;
-}
-
 ::selection {
   background-color: var(--color-accent);
   color: var(--color-dark);
@@ -164,7 +159,7 @@ body::before {
 }
 
 .markdown-content h1 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--font-display);
   font-size: 2.25em;
   font-weight: 700;
   margin-top: 0;
@@ -172,7 +167,7 @@ body::before {
 }
 
 .markdown-content h2 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: var(--font-display);
   font-size: 1.4em;
   font-weight: 600;
   margin-top: 2.5em;

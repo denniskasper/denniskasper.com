@@ -119,7 +119,11 @@ const commitHash = import.meta.env.DEV
     />
     <script is:inline>
       ;(function () {
-        var saved = localStorage.getItem('denniskasper.com-theme')
+        // localStorage throws when the browser blocks site data; fall back to the OS scheme
+        var saved = null
+        try {
+          saved = localStorage.getItem('denniskasper.com-theme')
+        } catch (e) {}
         var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
         if (saved === 'dark' || (saved === null && prefersDark)) document.documentElement.classList.add('dark')
       })()
@@ -153,7 +157,8 @@ const commitHash = import.meta.env.DEV
             <button
               data-icon-btn
               class="ml-3 p-2.5 rounded-full hover:bg-dark/5 dark:hover:bg-light/5 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-light dark:focus-visible:ring-offset-dark"
-              aria-label="Toggle theme"
+              aria-label="Dark theme"
+              aria-pressed="false"
             >
               <img
                 data-icon
@@ -196,19 +201,30 @@ const commitHash = import.meta.env.DEV
       const iconButton = document.querySelector('[data-icon-btn]') as HTMLButtonElement
       const icon = document.querySelector('[data-icon]') as HTMLImageElement
 
-      // Left over from the removed consent banner
-      localStorage.removeItem('denniskasper.com-storageAccepted')
-
-      // Sync icon to match theme already applied by head script
-      if (document.documentElement.classList.contains('dark')) {
-        icon.src = iconSunSource
+      // localStorage throws when the browser blocks site data. The toggle must
+      // still work then; the choice just isn't remembered.
+      const storage = (action: (s: Storage) => void) => {
+        try {
+          action(localStorage)
+        } catch {}
       }
+
+      // Left over from the removed consent banner
+      storage((s) => s.removeItem('denniskasper.com-storageAccepted'))
+
+      const syncButton = (isDark: boolean) => {
+        icon.src = isDark ? iconSunSource : '/icons/moon.svg'
+        iconButton.setAttribute('aria-pressed', String(isDark))
+      }
+
+      // Sync the button to the theme already applied by the head script
+      syncButton(document.documentElement.classList.contains('dark'))
 
       iconButton.addEventListener('click', () => {
         const isDark = document.documentElement.classList.toggle('dark')
 
-        icon.src = isDark ? iconSunSource : '/icons/moon.svg'
-        localStorage.setItem(localStorageTheme, isDark ? 'dark' : 'light')
+        syncButton(isDark)
+        storage((s) => s.setItem(localStorageTheme, isDark ? 'dark' : 'light'))
       })
 
       console.log(

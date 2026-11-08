@@ -28,10 +28,6 @@ pnpm-debug.log*
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
 
 # docs (only agent config and ADRs are tracked)
 docs/*
