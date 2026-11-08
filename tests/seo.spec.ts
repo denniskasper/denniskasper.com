@@ -1,10 +1,8 @@
 import { test, expect } from '@playwright/test'
 
-const BASE_URL = 'http://localhost:4321'
-
 for (const path of ['/', '/resume/']) {
   test(`${path} has canonical, social and structured metadata`, async ({ page }) => {
-    await page.goto(`${BASE_URL}${path}`)
+    await page.goto(path)
 
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://denniskasper.com${path}`)
     await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', `https://denniskasper.com${path}`)
@@ -18,30 +16,30 @@ for (const path of ['/', '/resume/']) {
 }
 
 test('404 page is not indexed', async ({ page }) => {
-  await page.goto(`${BASE_URL}/does-not-exist`)
+  await page.goto('/does-not-exist')
 
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex')
   await expect(page.locator('link[rel="canonical"]')).toHaveCount(0)
 })
 
 test('robots.txt points to the sitemap', async ({ request }) => {
-  const robots = await (await request.get(`${BASE_URL}/robots.txt`)).text()
+  const robots = await (await request.get('/robots.txt')).text()
   expect(robots).toContain('Sitemap: https://denniskasper.com/sitemap-index.xml')
 
-  const sitemap = await request.get(`${BASE_URL}/sitemap-index.xml`)
+  const sitemap = await request.get('/sitemap-index.xml')
   expect(sitemap.status()).toBe(200)
 })
 
 test('social images are served', async ({ request }) => {
   for (const path of ['/og-image.png', '/apple-touch-icon.png']) {
-    const response = await request.get(`${BASE_URL}${path}`)
+    const response = await request.get(path)
     expect(response.status(), path).toBe(200)
     expect(response.headers()['content-type'], path).toContain('image/png')
   }
 })
 
 test('homepage hero photo is described and served in modern formats', async ({ page }) => {
-  await page.goto(BASE_URL)
+  await page.goto('/')
 
   const photo = page.locator('section img')
   await expect(photo).toHaveAttribute('alt', /windsurfing.*Hvide Sande/)
