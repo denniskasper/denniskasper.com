@@ -21,15 +21,15 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
-    "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.3.3",
+    "@tailwindcss/vite": "^4.3.4",
+    "astro": "^7.4.5",
     "sharp": "^0.35.5",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.4"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
-    "@playwright/test": "^1.63.0",
-    "@types/node": "^24.13.6",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.6",
     "prettier": "^3.9.10",
     "prettier-plugin-astro": "^1.1.2",
     "tsx": "^4.23.15",
