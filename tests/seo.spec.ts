@@ -6,7 +6,10 @@ for (const path of ['/', '/resume/']) {
 
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://denniskasper.com${path}`)
     await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', `https://denniskasper.com${path}`)
-    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://denniskasper.com/og-image.png')
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+      'content',
+      'https://denniskasper.com/og-image.png',
+    )
     await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /.{50,}/)
 
     const jsonLd = JSON.parse((await page.locator('script[type="application/ld+json"]').textContent()) ?? '')
@@ -30,11 +33,19 @@ test('robots.txt points to the sitemap', async ({ request }) => {
   expect(sitemap.status()).toBe(200)
 })
 
-test('social images are served', async ({ request }) => {
-  for (const path of ['/og-image.png', '/apple-touch-icon.png']) {
+test('icons and social images are served', async ({ request }) => {
+  const images = {
+    '/og-image.png': 'image/png',
+    '/apple-touch-icon.png': 'image/png',
+    '/favicon.svg': 'image/svg+xml',
+    // Requested by convention even though the pages link the SVG
+    '/favicon.ico': 'image/',
+  }
+
+  for (const [path, contentType] of Object.entries(images)) {
     const response = await request.get(path)
     expect(response.status(), path).toBe(200)
-    expect(response.headers()['content-type'], path).toContain('image/png')
+    expect(response.headers()['content-type'], path).toContain(contentType)
   }
 })
 

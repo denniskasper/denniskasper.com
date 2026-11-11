@@ -59,3 +59,28 @@ test('theme still follows the system and toggles when site data is blocked', asy
   await page.getByRole('button', { name: 'Dark theme' }).click()
   await expect(html).not.toHaveClass(/dark/)
 })
+
+test('browser theme color follows an explicit toggle instead of the system', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'light' })
+  await page.goto('/')
+  const themeColors = page.locator('meta[name="theme-color"]')
+  await expect(themeColors).toHaveCount(2)
+
+  await page.getByRole('button', { name: 'Dark theme' }).click()
+
+  // Both tags, whatever their media query, now carry the dark page background
+  for (const themeColor of await themeColors.all()) {
+    await expect(themeColor).toHaveAttribute('content', 'rgb(19, 24, 26)')
+  }
+})
+
+test('toggle shows exactly one icon in each theme', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'dark' })
+  await page.goto('/')
+  const button = page.getByRole('button', { name: 'Dark theme' })
+  const visibleIcons = button.locator('svg').filter({ visible: true })
+  await expect(visibleIcons).toHaveCount(1)
+
+  await button.click()
+  await expect(visibleIcons).toHaveCount(1)
+})

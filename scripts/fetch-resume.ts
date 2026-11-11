@@ -7,6 +7,7 @@
  * Source: https://github.com/denniskasper/resume
  */
 
+import { existsSync } from 'fs'
 import { readFile, writeFile, mkdir } from 'fs/promises'
 import { dirname, join } from 'path'
 
@@ -19,6 +20,35 @@ const LOCAL_RESUME_MD_PATH = process.env.RESUME_MD_PATH
 
 const OUTPUT_MD_PATH = 'src/pages/resume.md'
 const OUTPUT_PDF_PATH = 'public/resume.pdf'
+
+// GitHub Actions and Cloudflare Workers Builds
+const IS_CI = Boolean(process.env.CI || process.env.WORKERS_CI)
+
+/** The source could not be downloaded, as opposed to its content being wrong. */
+class DownloadError extends Error {
+  constructor(
+    url: string,
+    reason: string,
+    readonly status?: number,
+  ) {
+    super(`Failed to fetch ${url}: ${reason}`)
+  }
+}
+
+async function download(url: string): Promise<Response> {
+  let response: Response
+  try {
+    response = await fetch(url)
+  } catch (err) {
+    // fetch() reports network failures as a bare "fetch failed"; the cause says why.
+    const { message, cause } = err as Error
+    throw new DownloadError(url, cause instanceof Error ? cause.message : message)
+  }
+  if (!response.ok) {
+    throw new DownloadError(url, `${response.status} ${response.statusText}`, response.status)
+  }
+  return response
+}
 
 const FRONTMATTER = `---
 title: 'Resume | Dennis Kasper'
@@ -42,12 +72,7 @@ async function loadMarkdown(): Promise<string> {
 
   console.log(`Fetching markdown from ${RESUME_MD_URL}...`)
 
-  const response = await fetch(RESUME_MD_URL)
-  if (!response.ok) {
-    throw new Error(`Failed to fetch markdown: ${response.status} ${response.statusText}`)
-  }
-
-  return response.text()
+  return (await download(RESUME_MD_URL)).text()
 }
 
 async function writeResumePage(): Promise<void> {
@@ -72,16 +97,16 @@ async function writeResumePage(): Promise<void> {
   // site, serve them from the current origin and open them in a new tab.
   markdown = markdown.replace(
     /\[([^\]]+)\]\(https:\/\/denniskasper\.com(\/certificates\/[^)\s]+)\)/g,
-    '<a href="$2" target="_blank" rel="noopener">$1</a>'
+    '<a href="$2" target="_blank" rel="noopener">$1</a>',
   )
 
   // Replace h1 name with flex container including download button
   markdown = markdown.replace(
     /^# (.+)$/m,
     `<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-2">
-  <h1 class="text-3xl font-bold m-0 font-display">$1</h1>
+  <h1>$1</h1>
   ${DOWNLOAD_BUTTON}
-</div>`
+</div>`,
   )
 
   // Wrap everything in markdown-content div for styling
@@ -104,16 +129,18 @@ ${markdown.trim()}
 async function fetchPdf(): Promise<void> {
   console.log(`Fetching PDF from ${RESUME_PDF_URL}...`)
 
-  const response = await fetch(RESUME_PDF_URL)
-  if (!response.ok) {
-    // Locally a missing release is only a warning. In CI (GitHub Actions and
-    // Cloudflare Workers Builds) it fails the build so a broken Download link never ships.
-    if (response.status === 404 && !process.env.CI && !process.env.WORKERS_CI) {
+  let response: Response
+  try {
+    response = await download(RESUME_PDF_URL)
+  } catch (err) {
+    // Locally a missing release is only a warning. In CI it fails the build so a
+    // broken Download link never ships.
+    if (err instanceof DownloadError && err.status === 404 && !IS_CI) {
       console.warn(`Warning: PDF not found at ${RESUME_PDF_URL}. Make sure you have published a release.`)
       console.warn(`Run: gh release create v1.0.0 dennis_kasper_resume.pdf --repo ${REPO}`)
       return
     }
-    throw new Error(`Failed to fetch PDF: ${response.status} ${response.statusText}`)
+    throw err
   }
 
   const buffer = await response.arrayBuffer()
@@ -124,9 +151,22 @@ async function fetchPdf(): Promise<void> {
   console.log(`PDF written to ${OUTPUT_PDF_PATH}`)
 }
 
+/**
+ * Locally, an unreachable GitHub must not block `pnpm dev` when an earlier run
+ * already produced the file. CI always fails, so a deploy never ships a stale resume.
+ */
+async function keepExistingIfOffline(outputPath: string, produce: () => Promise<void>): Promise<void> {
+  try {
+    await produce()
+  } catch (err) {
+    if (!(err instanceof DownloadError) || IS_CI || !existsSync(outputPath)) throw err
+    console.warn(`Warning: ${err.message}. Keeping the existing ${outputPath}.`)
+  }
+}
+
 async function main(): Promise<void> {
-  await writeResumePage()
-  await fetchPdf()
+  await keepExistingIfOffline(OUTPUT_MD_PATH, writeResumePage)
+  await keepExistingIfOffline(OUTPUT_PDF_PATH, fetchPdf)
 }
 
 main().catch((err: Error) => {

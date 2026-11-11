@@ -1,22 +1,30 @@
 ---
-const { icon, link } = Astro.props
+import GitHub from '../assets/icons/github.svg'
+import LinkedIn from '../assets/icons/linkedin.svg'
 
-const labels: Record<string, string> = {
-  github: 'GitHub profile (opens in new tab)',
-  linkedin: 'LinkedIn profile (opens in new tab)',
+export interface Props {
+  icon: keyof typeof icons
+  link: string
 }
+
+const icons = {
+  github: { Icon: GitHub, label: 'GitHub profile (opens in new tab)' },
+  linkedin: { Icon: LinkedIn, label: 'LinkedIn profile (opens in new tab)' },
+}
+
+const { icon, link } = Astro.props
+const { Icon, label } = icons[icon]
 ---
 
 <a
   href={link}
   target="_blank"
   rel="noopener noreferrer"
-  aria-label={labels[icon] || `${icon} (opens in new tab)`}
+  aria-label={label}
   class="group p-2.5 rounded-full hover:bg-dark/5 dark:hover:bg-light/5 transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-light dark:focus-visible:ring-offset-dark"
 >
-  <img
-    src={`/icons/${icon}.svg`}
-    alt=""
-    class="h-5 w-5 cursor-pointer opacity-50 group-hover:opacity-100 transition-opacity duration-300 dark:invert"
+  <Icon
+    aria-hidden="true"
+    class="h-5 w-5 opacity-50 group-hover:opacity-100 transition-opacity duration-300"
   />
 </a>

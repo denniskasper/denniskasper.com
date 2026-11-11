@@ -1,0 +1,12 @@
+# generated
+dist/
+.astro/
+pnpm-lock.yaml
+src/pages/resume.md
+playwright-report/
+test-results/
+
+# managed by the skills installer
+skills-lock.json
+.agents/
+.claude/

@@ -2,6 +2,8 @@
 import { execSync } from 'node:child_process'
 import NavLink from '@components/nav-link.astro'
 import NavSocial from '@components/nav-social.astro'
+import Moon from '../assets/icons/moon.svg'
+import Sun from '../assets/icons/sun.svg'
 import '../styles/global.css'
 
 export interface Props {
@@ -35,9 +37,7 @@ const personJsonLd = {
 
 const year = new Date().getFullYear()
 
-const commitHash = import.meta.env.DEV
-  ? execSync('git rev-parse --short HEAD').toString().trim()
-  : null
+const commitHash = import.meta.env.DEV ? execSync('git rev-parse --short HEAD').toString().trim() : null
 ---
 
 <!doctype html>
@@ -47,6 +47,11 @@ const commitHash = import.meta.env.DEV
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0"
+    />
+    <link
+      rel="icon"
+      href="/favicon.ico"
+      sizes="32x32"
     />
     <link
       rel="icon"
@@ -62,7 +67,17 @@ const commitHash = import.meta.env.DEV
       name="description"
       content={pageDescription}
     />
-    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonicalUrl} />}
+    {noindex ? (
+      <meta
+        name="robots"
+        content="noindex"
+      />
+    ) : (
+      <link
+        rel="canonical"
+        href={canonicalUrl}
+      />
+    )}
     <meta
       name="theme-color"
       content="#f0ece4"
@@ -131,11 +146,12 @@ const commitHash = import.meta.env.DEV
   </head>
   <body class="bg-light dark:bg-dark text-dark dark:text-light font-body text-base leading-relaxed antialiased">
     <div class="min-h-screen flex flex-col">
-      <main class="w-full max-w-3xl mx-auto px-4 sm:px-6 md:px-8 flex-1 pb-24 sm:pb-0">
-        <header
-          class="flex items-center justify-between pt-8 pb-12 sm:pt-10 sm:pb-16 md:pt-14 md:pb-20"
-        >
-          <nav class="flex items-center gap-x-4 sm:gap-x-6 md:gap-x-8">
+      <main class="w-full max-w-3xl mx-auto px-4 sm:px-6 md:px-8 flex-1">
+        <header class="flex items-center justify-between pt-8 pb-12 sm:pt-10 sm:pb-16 md:pt-14 md:pb-20">
+          <nav
+            aria-label="Main"
+            class="flex items-center gap-x-4 sm:gap-x-6 md:gap-x-8"
+          >
             <NavLink
               title="Home"
               url="/"
@@ -145,29 +161,36 @@ const commitHash = import.meta.env.DEV
               url="/resume/"
             />
           </nav>
-          <nav class="flex items-center gap-x-3">
-            <NavSocial
-              icon="github"
-              link="https://github.com/denniskasper"
-            />
-            <NavSocial
-              icon="linkedin"
-              link="https://www.linkedin.com/in/denniskasper"
-            />
+          <div class="flex items-center gap-x-3">
+            <nav
+              aria-label="Profiles"
+              class="flex items-center gap-x-3"
+            >
+              <NavSocial
+                icon="github"
+                link="https://github.com/denniskasper"
+              />
+              <NavSocial
+                icon="linkedin"
+                link="https://www.linkedin.com/in/denniskasper"
+              />
+            </nav>
             <button
-              data-icon-btn
+              data-theme-toggle
               class="ml-3 p-2.5 rounded-full hover:bg-dark/5 dark:hover:bg-light/5 transition-colors duration-300 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-light dark:focus-visible:ring-offset-dark"
               aria-label="Dark theme"
               aria-pressed="false"
             >
-              <img
-                data-icon
-                src="/icons/moon.svg"
-                alt=""
-                class="h-5 w-5"
+              <Moon
+                aria-hidden="true"
+                class="h-5 w-5 dark:hidden"
+              />
+              <Sun
+                aria-hidden="true"
+                class="h-5 w-5 hidden dark:block"
               />
             </button>
-          </nav>
+          </div>
         </header>
         <article>
           <slot />
@@ -192,46 +215,53 @@ const commitHash = import.meta.env.DEV
         </div>
       </footer>
     </div>
-  </body>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const localStorageTheme = 'denniskasper.com-theme'
-      const iconSunSource = '/icons/sun.svg'
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const localStorageTheme = 'denniskasper.com-theme'
 
-      const iconButton = document.querySelector('[data-icon-btn]') as HTMLButtonElement
-      const icon = document.querySelector('[data-icon]') as HTMLImageElement
+        const toggle = document.querySelector('[data-theme-toggle]') as HTMLButtonElement
 
-      // localStorage throws when the browser blocks site data. The toggle must
-      // still work then; the choice just isn't remembered.
-      const storage = (action: (s: Storage) => void) => {
-        try {
-          action(localStorage)
-        } catch {}
-      }
+        // localStorage throws when the browser blocks site data. The toggle must
+        // still work then; the choice just isn't remembered.
+        const storage = (action: (s: Storage) => void) => {
+          try {
+            action(localStorage)
+          } catch {}
+        }
 
-      // Left over from the removed consent banner
-      storage((s) => s.removeItem('denniskasper.com-storageAccepted'))
+        // Left over from the removed consent banner
+        storage((s) => s.removeItem('denniskasper.com-storageAccepted'))
 
-      const syncButton = (isDark: boolean) => {
-        icon.src = isDark ? iconSunSource : '/icons/moon.svg'
-        iconButton.setAttribute('aria-pressed', String(isDark))
-      }
+        const syncTheme = (isDark: boolean) => {
+          toggle.setAttribute('aria-pressed', String(isDark))
 
-      // Sync the button to the theme already applied by the head script
-      syncButton(document.documentElement.classList.contains('dark'))
+          // The theme-color tags follow the OS scheme, which an explicit toggle can
+          // contradict. Point them all at the page background actually shown.
+          const background = getComputedStyle(document.body).backgroundColor
+          document
+            .querySelectorAll('meta[name="theme-color"]')
+            .forEach((meta) => meta.setAttribute('content', background))
+        }
 
-      iconButton.addEventListener('click', () => {
-        const isDark = document.documentElement.classList.toggle('dark')
+        // Sync to the theme already applied by the head script
+        syncTheme(document.documentElement.classList.contains('dark'))
 
-        syncButton(isDark)
-        storage((s) => s.setItem(localStorageTheme, isDark ? 'dark' : 'light'))
+        toggle.addEventListener('click', () => {
+          const isDark = document.documentElement.classList.toggle('dark')
+
+          syncTheme(isDark)
+          storage((s) => s.setItem(localStorageTheme, isDark ? 'dark' : 'light'))
+
+          // Replay the draw-in animation of the icon that just appeared
+          toggle.querySelectorAll('svg').forEach((svg) => svg.setCurrentTime(0))
+        })
+
+        console.log(
+          '%cDK%c\n\nHey, fellow developer. Curious how this is built?\nSource: https://github.com/denniskasper/denniskasper.com\nSay hi: https://www.linkedin.com/in/denniskasper',
+          'font: 700 48px "Playfair Display", Georgia, serif; color: #c8a45e;',
+          'font: 14px system-ui, sans-serif; color: inherit;',
+        )
       })
-
-      console.log(
-        '%cDK%c\n\nHey, fellow developer. Curious how this is built?\nSource: https://github.com/denniskasper/denniskasper.com\nSay hi: https://www.linkedin.com/in/denniskasper',
-        'font: 700 48px "Playfair Display", Georgia, serif; color: #c8a45e;',
-        'font: 14px system-ui, sans-serif; color: inherit;',
-      )
-    })
-  </script>
+    </script>
+  </body>
 </html>
