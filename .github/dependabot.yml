@@ -8,6 +8,10 @@ updates:
       # One PR a month for all package updates instead of one per package
       npm:
         patterns: ['*']
+    ignore:
+      # `astro check` needs the TypeScript 6 programmatic API, which 7.x does not ship yet
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
 
   - package-ecosystem: github-actions
     directory: /

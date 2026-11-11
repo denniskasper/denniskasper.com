@@ -34,6 +34,13 @@ pnpm build
 pnpm pw:test
 ```
 
+## checks
+
+```console
+pnpm check
+pnpm format:check
+```
+
 ## stack
 
 [astro](https://astro.build/)  

@@ -7,10 +7,7 @@
   /* North Sea slate, taken from the hero photo */
   --color-dark: #13181a;
   --color-accent: #c8a45e;
-  --color-accent-muted: #a68b4b;
   --color-accent-light: #e8d5a3;
-  --color-surface-light: #faf8f4;
-  --color-surface-dark: #1b2124;
   /* Muted text meets WCAG AA (4.5:1) on its background */
   --color-muted-light: #6e685f;
   --color-muted-dark: #8c9396;
@@ -19,8 +16,6 @@
 
   --font-display: "Playfair Display", Georgia, serif;
   --font-body: "Source Sans 3", system-ui, sans-serif;
-
-  --duration-400: 400ms;
 }
 
 /* ─── The one load moment: the hero photo develops out of the dark ─── */
@@ -98,12 +93,15 @@
 }
 
 /* ─── CSS Custom Properties ─── */
+/* color-scheme keeps browser-drawn UI, like the always-visible scrollbar, on the page's theme */
 :root {
+  color-scheme: light;
   --color-muted: var(--color-muted-light);
   --color-link: var(--color-accent-ink);
 }
 
 html.dark {
+  color-scheme: dark;
   --color-muted: var(--color-muted-dark);
   --color-link: var(--color-accent);
 }
@@ -111,7 +109,12 @@ html.dark {
 /* ─── Base ─── */
 html {
   overflow-y: scroll;
-  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 ::selection {
@@ -162,6 +165,7 @@ body::before {
   font-family: var(--font-display);
   font-size: 2.25em;
   font-weight: 700;
+  line-height: 1.2;
   margin-top: 0;
   letter-spacing: -0.01em;
 }
