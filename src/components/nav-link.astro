@@ -15,11 +15,13 @@ const isActive = pathname === url
   href={url}
   aria-current={isActive ? 'page' : undefined}
 >
-  <span class:list={[
-    'transition-colors duration-300',
-    { 'text-dark dark:text-light': isActive },
-    { 'text-muted-light dark:text-muted-dark group-hover:text-dark dark:group-hover:text-light': !isActive },
-  ]}>
+  <span
+    class:list={[
+      'transition-colors duration-300',
+      { 'text-dark dark:text-light': isActive },
+      { 'text-muted-light dark:text-muted-dark group-hover:text-dark dark:group-hover:text-light': !isActive },
+    ]}
+  >
     {title}
   </span>
   <span
@@ -30,6 +32,5 @@ const isActive = pathname === url
         'w-0 group-hover:w-full transition-[width] ease-out duration-400': !isActive,
       },
     ]}
-  >
-  </span>
+  ></span>
 </a>

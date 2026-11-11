@@ -29,7 +29,7 @@ class DownloadError extends Error {
   constructor(
     url: string,
     reason: string,
-    readonly status?: number
+    readonly status?: number,
   ) {
     super(`Failed to fetch ${url}: ${reason}`)
   }
@@ -97,7 +97,7 @@ async function writeResumePage(): Promise<void> {
   // site, serve them from the current origin and open them in a new tab.
   markdown = markdown.replace(
     /\[([^\]]+)\]\(https:\/\/denniskasper\.com(\/certificates\/[^)\s]+)\)/g,
-    '<a href="$2" target="_blank" rel="noopener">$1</a>'
+    '<a href="$2" target="_blank" rel="noopener">$1</a>',
   )
 
   // Replace h1 name with flex container including download button
@@ -106,7 +106,7 @@ async function writeResumePage(): Promise<void> {
     `<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-2">
   <h1>$1</h1>
   ${DOWNLOAD_BUTTON}
-</div>`
+</div>`,
   )
 
   // Wrap everything in markdown-content div for styling

@@ -5,17 +5,20 @@ This file provides guidance to coding agents when working with code in this repo
 ## Development Commands
 
 **Local development (Node.js):**
+
 ```bash
 pnpm install
 pnpm dev
 ```
 
 **Build production:**
+
 ```bash
 pnpm build
 ```
 
 **Type-check and format:**
+
 ```bash
 # Needs the generated resume page, so run it after `pnpm build` or `pnpm dev`
 pnpm check
@@ -27,6 +30,7 @@ pnpm format:check  # verify, as CI does
 `astro check` needs TypeScript 6; do not bump `typescript` to 7 until it supports it.
 
 **Testing:**
+
 ```bash
 # Install Playwright browsers first
 pnpm exec playwright install
@@ -51,6 +55,7 @@ This is a personal homepage built with Astro and TailwindCSS. The architecture i
 - **Playwright**: End-to-end testing framework
 
 **Key directories:**
+
 - `src/assets/`: Images optimized at build time by `astro:assets` (needs `sharp`), e.g. the homepage hero photo
 - `src/assets/icons/`: SVG icons imported as components and inlined into the HTML; they draw in `currentColor`, so they follow the theme
 - `src/components/`: Reusable Astro components (nav-link, nav-social)
@@ -70,6 +75,7 @@ Outside CI, a failed download keeps the previously generated files with a warnin
 
 **Theme System:**
 The site implements a dark/light theme toggle using:
+
 - TailwindCSS dark mode classes
 - Local storage to remember an explicit toggle (no consent banner: it is strictly necessary for a user-requested feature); otherwise the OS color scheme applies
 - Client-side JavaScript in the layout for theme switching logic, which also points the `theme-color` meta tags at the theme actually shown
@@ -79,6 +85,7 @@ The site implements a dark/light theme toggle using:
 The layout emits the canonical URL, Open Graph/Twitter tags and `Person` JSON-LD for every page. Pages pass `title` and `description` as props (or frontmatter for `resume.md`); pass `noindex` to drop the canonical and add `robots: noindex`. `@astrojs/sitemap` generates `sitemap-index.xml`.
 
 **Import Aliases:**
+
 - `@components/*` → `src/components/*`
 - `@layouts/*` → `src/layouts/*`
 

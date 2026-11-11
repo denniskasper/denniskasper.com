@@ -6,7 +6,10 @@ for (const path of ['/', '/resume/']) {
 
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://denniskasper.com${path}`)
     await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', `https://denniskasper.com${path}`)
-    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', 'https://denniskasper.com/og-image.png')
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+      'content',
+      'https://denniskasper.com/og-image.png',
+    )
     await expect(page.locator('meta[name="description"]')).toHaveAttribute('content', /.{50,}/)
 
     const jsonLd = JSON.parse((await page.locator('script[type="application/ld+json"]').textContent()) ?? '')

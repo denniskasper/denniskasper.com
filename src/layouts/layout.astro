@@ -37,9 +37,7 @@ const personJsonLd = {
 
 const year = new Date().getFullYear()
 
-const commitHash = import.meta.env.DEV
-  ? execSync('git rev-parse --short HEAD').toString().trim()
-  : null
+const commitHash = import.meta.env.DEV ? execSync('git rev-parse --short HEAD').toString().trim() : null
 ---
 
 <!doctype html>
@@ -69,7 +67,17 @@ const commitHash = import.meta.env.DEV
       name="description"
       content={pageDescription}
     />
-    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonicalUrl} />}
+    {noindex ? (
+      <meta
+        name="robots"
+        content="noindex"
+      />
+    ) : (
+      <link
+        rel="canonical"
+        href={canonicalUrl}
+      />
+    )}
     <meta
       name="theme-color"
       content="#f0ece4"
@@ -139,9 +147,7 @@ const commitHash = import.meta.env.DEV
   <body class="bg-light dark:bg-dark text-dark dark:text-light font-body text-base leading-relaxed antialiased">
     <div class="min-h-screen flex flex-col">
       <main class="w-full max-w-3xl mx-auto px-4 sm:px-6 md:px-8 flex-1">
-        <header
-          class="flex items-center justify-between pt-8 pb-12 sm:pt-10 sm:pb-16 md:pt-14 md:pb-20"
-        >
+        <header class="flex items-center justify-between pt-8 pb-12 sm:pt-10 sm:pb-16 md:pt-14 md:pb-20">
           <nav
             aria-label="Main"
             class="flex items-center gap-x-4 sm:gap-x-6 md:gap-x-8"
